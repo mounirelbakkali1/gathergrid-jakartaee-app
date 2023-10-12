@@ -1,0 +1,25 @@
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="default" >
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>ma.youcode.gathergrid.domain.User</class>
+        <class>ma.youcode.gathergrid.domain.Role</class>
+        <class>ma.youcode.gathergrid.domain.Event</class>
+        <class>ma.youcode.gathergrid.domain.Category</class>
+        <class>ma.youcode.gathergrid.domain.Organiser</class>
+        <class>ma.youcode.gathergrid.domain.Ticket</class>
+        <class>ma.youcode.gathergrid.domain.Comment</class>
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gatherGrid?createDatabaseIfNotExist=true"/>
+            <property name="jakarta.persistence.jdbc.user" value="root"/>
+            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
