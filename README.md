@@ -27,7 +27,7 @@
 
 
 ### STRUCTURE (INITIAL)
-
+```
 ├───src
 │   ├───main
 │   │   ├───java
@@ -48,4 +48,5 @@
 │       └───resources
 ├───target
 └───UML
+```
 
