@@ -24,6 +24,9 @@ public class Comment {
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Event event;
+
     @Override
     public String toString() {
         return "Comment{" +

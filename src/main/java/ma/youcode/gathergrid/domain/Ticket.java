@@ -1,15 +1,14 @@
 package ma.youcode.gathergrid.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "tickets")
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Setter
+@Getter
 public class Ticket {
 
     @Id
@@ -23,4 +22,9 @@ public class Ticket {
     @Column(name = "ticket_type")
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
+
+    @ManyToOne
+    private Event event;
+
+
 }
