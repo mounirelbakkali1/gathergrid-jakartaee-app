@@ -2,8 +2,10 @@ package ma.youcode.gathergrid.repositories;
 
 import jakarta.annotation.Priority;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.PersistenceContext;
 import ma.youcode.gathergrid.domain.User;
 
 import java.util.List;
@@ -13,12 +15,10 @@ import java.util.Optional;
 @Priority(1)
 public class UserRepositoryImpl implements UserRepository {
 
-
-    private final EntityManager em;
+    @Inject
+    private EntityManager em;
 
     public UserRepositoryImpl() {
-        EntityManagerFactory emf = jakarta.persistence.Persistence.createEntityManagerFactory("default");
-        em = emf.createEntityManager();
     }
 
 
