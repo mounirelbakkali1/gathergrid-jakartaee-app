@@ -1,5 +1,12 @@
 package ma.youcode.gathergrid.resources;
 
+import jakarta.inject.Inject;
+import jakarta.security.enterprise.AuthenticationStatus;
+import jakarta.security.enterprise.SecurityContext;
+import jakarta.security.enterprise.authentication.mechanism.http.AuthenticationParameters;
+import jakarta.security.enterprise.credential.Credential;
+import jakarta.security.enterprise.credential.Password;
+import jakarta.security.enterprise.credential.UsernamePasswordCredential;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -18,11 +25,13 @@ public class LoginServlet extends HttpServlet {
 
 
     private final  UserService userService = new UserService();
+    @Inject
+    private SecurityContext securityContext ;
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("login.html");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -30,17 +39,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        User user = User.builder()
-                .username(username)
-                .password(password)
-                .build();
-        if (userService.isValidUser(user)) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            response.sendRedirect("hello");
-        } else {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.sendRedirect("login-error.html");
-        }
+        System.out.println(String.format("trying to login with %s %s",username,password));
+        Credential credential = new UsernamePasswordCredential(username,new Password(password));
+        AuthenticationStatus status = securityContext.authenticate(request,response, AuthenticationParameters.withParams().credential(credential));
+        System.out.println(status);
     }
 }
