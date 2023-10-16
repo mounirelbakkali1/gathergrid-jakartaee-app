@@ -10,5 +10,6 @@
 <br/>
 <a href="login">login</a>
 <a href="register">register</a>
+<a href="secure">secure</a>
 </body>
 </html>
