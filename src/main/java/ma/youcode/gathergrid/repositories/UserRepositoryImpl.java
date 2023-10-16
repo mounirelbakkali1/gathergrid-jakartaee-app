@@ -14,7 +14,7 @@ import java.util.Optional;
 public class UserRepositoryImpl implements UserRepository {
 
 
-    private EntityManager em;
+    private final EntityManager em;
 
     public UserRepositoryImpl() {
         EntityManagerFactory emf = jakarta.persistence.Persistence.createEntityManagerFactory("default");
