@@ -1,28 +1,34 @@
 package ma.youcode.gathergrid.repositories;
 
-import jakarta.annotation.Priority;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceUnit;
+import jakarta.transaction.Transactional;
+import ma.youcode.gathergrid.config.UserDatabase;
+import ma.youcode.gathergrid.domain.Role;
 import ma.youcode.gathergrid.domain.User;
 
 import java.util.List;
 import java.util.Optional;
 
-@ApplicationScoped
-@Priority(1)
+@RequestScoped
 public class UserRepositoryImpl implements UserRepository {
 
-    @Inject
-    private EntityManager em;
 
-    public UserRepositoryImpl() {
+    private  EntityManager em;
+
+    @Inject
+    public UserRepositoryImpl(@UserDatabase EntityManager em) {
+        this.em = em;
     }
 
 
     @Override
+    @Transactional
     public Optional<User> findByUsername(String username) {
         System.out.println("Getting user by username: " + username);
         return em.createQuery("select u from User u where u.username = :username", User.class)
@@ -32,20 +38,32 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void save(User user) {
-        em.persist(user);
+        System.out.println("saving user... " + user);
+        Role userRole = em.createQuery("select r from Role r where r.name = :name", Role.class)
+                .setParameter("name", "USER")
+                .getResultStream().findAny().orElse(null);
+        if (userRole == null) {
+            userRole = new Role("USER");
+            em.persist(userRole);
+        }
+        user.setRole(userRole);
+        em.merge(user);
     }
 
     @Override
+    @Transactional
     public void update(User user) {
         em.merge(user);
     }
 
     @Override
+    @Transactional
     public void delete(User user) {
         em.remove(user);
     }
 
     @Override
+    @Transactional
     public List<User> findAll() {
         return em.createQuery("select u from User u", User.class).getResultList();
     }

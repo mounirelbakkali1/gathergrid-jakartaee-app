@@ -1,6 +1,9 @@
 package ma.youcode.gathergrid.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Alternative;
+import jakarta.enterprise.inject.Model;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.domain.User;
 import ma.youcode.gathergrid.repositories.UserRepository;
@@ -12,7 +15,15 @@ import java.util.Optional;
 @ApplicationScoped
 public class UserService {
 
-    private final UserRepository userRepository = new UserRepositoryImpl();
+    private  UserRepository userRepository;
+
+    @Inject
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public UserService() {
+    }
 
     @Transactional(Transactional.TxType.REQUIRED)
     public User registerUser(@Valid User user) {
@@ -48,6 +59,6 @@ public class UserService {
     public boolean validLoginDetails(@Valid User user) {
         System.out.println("Validating user: " + user);
         return !userRepository.findByUsername(user.getUsername()).isPresent()
-                && user.getPassword().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
+                && user.getPassword() !=null && user.getPassword().matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$");
     }
 }

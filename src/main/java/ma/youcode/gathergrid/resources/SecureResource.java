@@ -20,7 +20,7 @@ import java.util.Optional;
                 errorPage = "/login?error=failed"
         )
 )
-@ServletSecurity(@HttpConstraint(rolesAllowed = "admin"))
+@ServletSecurity(@HttpConstraint(rolesAllowed = {"USER","ADMIN"}))
 @WebServlet("/secure")
 public class SecureResource extends HttpServlet {
 

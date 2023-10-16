@@ -30,22 +30,7 @@ public class User {
             @NotNull
     String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "role_id")
     private Role role;
-
-    @PrePersist
-    public void prePersist(){
-        PasswordHashUtil passwordHashUtil = new PasswordHashUtil();
-        role = new Role("USER");
-        password = passwordHashUtil.generate(password.toCharArray());
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        PasswordHashUtil passwordHashUtil = new PasswordHashUtil();
-        role = new Role("USER");
-        password = passwordHashUtil.generate(password.toCharArray());
-    }
-
 }

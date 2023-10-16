@@ -8,8 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 
 @WebServlet(name = "init_db", value = "/secure/init_db",loadOnStartup = 1)
 public class HelloServlet extends HttpServlet {
-/*
-    @Override
+  /*  @Override
     public void init() {
         try {
             super.init();
