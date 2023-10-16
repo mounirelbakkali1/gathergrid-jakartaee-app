@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServlet;
 
 @WebServlet(name = "init_db", value = "/secure/init_db",loadOnStartup = 1)
 public class HelloServlet extends HttpServlet {
-
+/*
     @Override
     public void init() {
         try {
@@ -24,5 +24,5 @@ public class HelloServlet extends HttpServlet {
 
     }
     public void destroy() {
-    }
+    }*/
 }
