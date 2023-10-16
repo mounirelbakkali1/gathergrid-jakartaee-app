@@ -4,8 +4,8 @@
 <head>
     <style>
         .btn-color{
-            background-color: #0e1c36;
-            color: #fff;
+            background-color: #22134C !important;
+            color: #fff !important;
 
         }
         .profile-image-pic{
@@ -22,50 +22,53 @@
         }
     </style>
     <title>Register</title>
-    <jsp:include page="components/head.jsp"></jsp:include>
 </head>
 <body>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <div class="card my-3">
-                <form class="card-body cardbody-color p-lg-5" action="register" method="post">
+<div class="d-flex">
+<%--    <img src="v859-katie-11.jpg" class="col-md-5"  alt="img">--%>
+    <img src='<c:url value="/files/login.jpg"></c:url>' />
 
-                    <div class="text-center">
-                        <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
-                             width="200px" alt="profile">
-                        <c:if test="${param.error != null}">
-                            <div class="alert alert-danger alert-dismissible fade show">${param.error}</div>
-                        </c:if>
-                    </div>
 
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="name" aria-describedby="nameHelp"
-                               placeholder="Name" name="name">
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
-                               placeholder="User Name" name="username">
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="email" aria-describedby="emailHelp"
-                               placeholder="Email" name="email">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword">
-                    </div>
-                    <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Create</button></div>
-                    <div id="emailHelp" class="form-text text-center mb-5 text-dark">Have
-                        An account? <a href="login" class="text-dark fw-bold">Login in</a>
-                    </div>
-                </form>
-            </div>
 
+
+
+    <div class="col-md-7">
+        <div class="">
+            <form class=" p-lg-5" action="register" method="post">
+
+                <div class="text-center">
+                    <h5 class="text-start">Create Account</h5>
+                    <c:if test="${param.error != null}">
+                        <div class="alert alert-danger alert-dismissible fade show">${param.error}</div>
+                    </c:if>
+                </div>
+
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="name" aria-describedby="nameHelp"
+                           placeholder="Name" name="name">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="username" aria-describedby="emailHelp"
+                           placeholder="User Name" name="username">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="email" aria-describedby="emailHelp"
+                           placeholder="Email" name="email">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword">
+                </div>
+                <div class="text-center"><button type="submit" class="btn rounded-3 btn-color px-5 mb-5 w-50 py-2">Create Account</button></div>
+                <div id="emailHelp" class="form-text text-center mb-5 text-dark">Have
+                    An account? <a href="login" class="text-dark fw-bold">Login</a>
+                </div>
+            </form>
         </div>
+
     </div>
 </div>
 </body>
