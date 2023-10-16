@@ -1,5 +1,6 @@
 package ma.youcode.gathergrid.resources;
 
+import jakarta.inject.Inject;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -15,7 +16,8 @@ import java.io.IOException;
 @WebServlet(name = "RegisterServlet", value = "/register")
 public class RegisterServlet extends HttpServlet {
 
-    private final UserService userService = new UserService();
+    @Inject
+    private  UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,12 +32,11 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String ConfirmPassword = request.getParameter("confirmPassword");
-        User user = User.builder()
-                .name(name)
-                .email(email)
-                .username(username)
-                .password(password)
-                .build();
+        User user = new User();
+        user.setName(name);
+        user.setEmail(email);
+        user.setUsername(username);
+        user.setPassword(password);
         if(userService.validLoginDetails(user) && password.equals(ConfirmPassword)) {
             userService.registerUser(user);
             response.sendRedirect("login");
