@@ -22,9 +22,6 @@ import java.io.IOException;
 
 @WebServlet(name = "LoginServlet", value = "/login")
 public class LoginServlet extends HttpServlet {
-
-
-    private final  UserService userService = new UserService();
     @Inject
     private SecurityContext securityContext ;
 
@@ -42,6 +39,10 @@ public class LoginServlet extends HttpServlet {
         System.out.println(String.format("trying to login with %s %s",username,password));
         Credential credential = new UsernamePasswordCredential(username,new Password(password));
         AuthenticationStatus status = securityContext.authenticate(request,response, AuthenticationParameters.withParams().credential(credential));
-        System.out.println(status);
+        if(status.equals(AuthenticationStatus.SEND_FAILURE)){
+            response.sendRedirect("login?error=failed");
+        }else if(status.equals(AuthenticationStatus.SEND_CONTINUE)){
+            response.sendRedirect("/");
+        }
     }
 }
