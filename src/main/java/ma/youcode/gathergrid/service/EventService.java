@@ -5,6 +5,7 @@ import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.repositories.EventRepository;
 import ma.youcode.gathergrid.utils.Response;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventService {
@@ -18,15 +19,15 @@ public class EventService {
     }
 
     public Response<Event> createEvent(Event event){
-        //if(event)
-        // new Response ;
-
-        //Response<Event> eventResponse = new Response<>();
-        //eventResponse.setError(List.of());
-        //return eventResponse;
-
-        //eventRepository.save(event);
-        //return event;
-        return null;
+        Response<Event> eventResponse = new Response<>();
+        ArrayList<Error>  errors = new ArrayList<Error>() ;
+        if(event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty() ){
+            errors.add(new Error("All Fields are required"));
+            eventResponse.setError(errors);
+        }else{
+            eventRepository.save(event);
+            eventResponse.setResult(event);
+        }
+        return eventResponse;
     }
 }
