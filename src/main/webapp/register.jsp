@@ -8,19 +8,11 @@
             color: #fff !important;
 
         }
-        .profile-image-pic{
-            height: 200px;
-            width: 200px;
-            object-fit: cover;
-        }
-        .cardbody-color{
-            background-color: #ebf2fa;
-        }
-
         a{
             text-decoration: none;
         }
     </style>
+    <%@ include file="components/head.jsp"%>
     <title>Register</title>
 </head>
 <body>
