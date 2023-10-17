@@ -1,15 +1,12 @@
 package ma.youcode.gathergrid.repositories;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Event;
-import ma.youcode.gathergrid.domain.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public class EventRepositoryImpl implements EventRepository{
 
@@ -20,30 +17,30 @@ public class EventRepositoryImpl implements EventRepository{
     }
 
     @Override
-    public Optional<Event> findById(int id) {
-        return Optional.empty();
+    public Event findById(long id) {
+        return em.find(Event.class,id);
     }
 
     @Override
     @Transactional
     public void save(Event event) {
-
+        em.persist(event);
     }
 
     @Override
     @Transactional
     public void update(Event event) {
-
+        em.merge(event);
     }
 
     @Override
     @Transactional
     public void delete(Event event) {
-
+        em.remove(event);
     }
 
     @Override
     public List<Event> findAll(Event event) {
-        return null;
+        return em.createQuery("Select e from Event e", Event.class).getResultList();
     }
 }

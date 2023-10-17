@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EventRepository {
-    public Optional<Event> findById(int id);
+    public Event findById(long id);
     public void save(Event event);
     public void update(Event event);
     public void delete(Event event);
