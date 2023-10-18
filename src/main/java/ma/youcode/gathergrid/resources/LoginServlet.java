@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
         if(status.equals(AuthenticationStatus.SEND_FAILURE)){
             response.sendRedirect("login?error=failed");
         }else if(status.equals(AuthenticationStatus.SUCCESS)){
-            request.getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request,response);
+            response.sendRedirect(request.getContextPath()+"/dashboard");
         }
     }
 }

@@ -10,7 +10,7 @@ import ma.youcode.gathergrid.service.EventService;
 
 import java.io.IOException;
 
-@WebServlet(name = "DashboardServlet", value = "/dashboard")
+@WebServlet(name = "dashboard", value = "/dashboard")
 public class DashboardServlet extends HttpServlet {
     @Inject
     private EventService eventService;
