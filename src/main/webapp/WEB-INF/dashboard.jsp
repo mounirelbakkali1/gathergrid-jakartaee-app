@@ -9,9 +9,9 @@
 <html>
 <head>
     <title>Dashboard</title>
-    <jsp:include page="components/head.jsp" />
+    <jsp:include page="../components/head.jsp" />
 </head>
 <body>
-    <p>you are in dashboard</p>
+    <h1>you are in dashboard</h1>
 </body>
 </html>
