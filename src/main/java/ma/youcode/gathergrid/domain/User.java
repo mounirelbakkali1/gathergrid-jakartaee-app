@@ -6,8 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ma.youcode.gathergrid.utils.PasswordHashUtil;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 
 @Entity
@@ -33,4 +34,8 @@ public class User {
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "user")
+            @JoinTable(name = "user_organizations",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "organization_id"))
+    List<Organization> organizations;
 }

@@ -57,6 +57,10 @@
                            placeholder="Email" name="email">
                 </div>
                 <div class="mb-3">
+                    <input type="text" class="form-control" id="organization"
+                           placeholder="Organization" name="organization">
+                </div>
+                <div class="mb-3">
                     <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                 </div>
                 <div class="mb-3">
