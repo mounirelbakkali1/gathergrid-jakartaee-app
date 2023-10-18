@@ -42,11 +42,11 @@
             <artifactId>hibernate-core</artifactId>
             <version>6.0.2.Final</version>
         </dependency>
-        <dependency>
+<!--        <dependency>
             <groupId>org.glassfish.jaxb</groupId>
             <artifactId>jaxb-runtime</artifactId>
             <version>3.0.2</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
@@ -95,12 +95,12 @@
             <version>3.0.0</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
+   <!--     <dependency>
             <groupId>jakarta.json.bind</groupId>
             <artifactId>jakarta.json.bind-api</artifactId>
             <version>2.0.0</version>
             <scope>provided</scope>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>

@@ -23,19 +23,16 @@ public class EventRepositoryImpl implements EventRepository{
     }
 
     @Override
-    @Transactional
     public void save(Event event) {
         em.persist(event);
     }
 
     @Override
-    @Transactional
     public void update(Event event) {
         em.merge(event);
     }
 
     @Override
-    @Transactional
     public void delete(Event event) {
         em.remove(event);
     }
