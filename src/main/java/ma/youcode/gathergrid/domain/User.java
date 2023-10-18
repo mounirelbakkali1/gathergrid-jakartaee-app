@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,7 +36,12 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "user")
-            @JoinTable(name = "user_organizations",joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "organization_id"))
-    List<Organization> organizations;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private List<Organization> organizations = new ArrayList<>();
+
+
+    public void addOrganization(Organization organization){
+        organizations.add(organization);
+        organization.setUser(this);
+    }
 }
