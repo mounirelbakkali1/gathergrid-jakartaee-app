@@ -1,6 +1,5 @@
 package ma.youcode.gathergrid.domain;
 
-import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.persistence.*;
 import lombok.*;
 

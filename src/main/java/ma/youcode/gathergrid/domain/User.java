@@ -2,10 +2,8 @@ package ma.youcode.gathergrid.domain;
 
 import jakarta.persistence.*;
 import javax.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
@@ -14,7 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -36,11 +35,13 @@ public class User {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Organization> organizations = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user",fetch = FetchType.EAGER)
+    private List<Organization> organizations;
 
 
     public void addOrganization(Organization organization){
+        if(organizations == null)
+            organizations = new ArrayList<>();
         organizations.add(organization);
         organization.setUser(this);
     }
