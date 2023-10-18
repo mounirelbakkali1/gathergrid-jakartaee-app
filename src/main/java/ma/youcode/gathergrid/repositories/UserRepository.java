@@ -13,4 +13,5 @@ public interface UserRepository {
     public void delete(User user);
     public List<User> findAll();
 
+    Optional<User> findByName(String userName);
 }

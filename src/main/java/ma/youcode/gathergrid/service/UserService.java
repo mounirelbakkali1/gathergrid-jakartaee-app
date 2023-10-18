@@ -35,6 +35,10 @@ public class UserService {
         return user;
     }
 
+    public Optional<User> findUserByUsername(String userName) {
+        return userRepository.findByName(userName);
+    }
+
     @Transactional(Transactional.TxType.REQUIRED)
     public User updateUserInfo(@Valid User user) {
         if (userRepository.findByUsername(user.getUsername()).isEmpty()) {

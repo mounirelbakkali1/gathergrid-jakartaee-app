@@ -27,8 +27,8 @@ public class OrganizationRepository {
         return em.createQuery("select o from Organization o",Organization.class).getResultList();
     }
 
-    public Organization findOrganizationById(Long id){
-        return em.find(Organization.class,id);
+    public Optional<Organization> findOrganizationById(Long id){
+        return Optional.of(em.find(Organization.class,id));
     }
 
     @Transactional(Transactional.TxType.REQUIRED)
@@ -42,13 +42,21 @@ public class OrganizationRepository {
         return organization;
     }
     @Transactional(Transactional.TxType.REQUIRED)
-    public void deleteOrganization(Organization organization){
-        em.remove(organization);
+    public void deleteOrganization(Long Id){
+        em.remove(em.find(Organization.class,Id));
+        em.flush();
+        em.clear();
     }
 
     public Optional<Organization> findOrganizationByName(String name){
         return em.createQuery("select o from Organization o where o.name = :name",Organization.class)
                     .setParameter("name",name)
                     .getResultStream().findAny();
+    }
+
+    public List<Organization> findAllOrganizationsByUser(Long id) {
+        return em.createQuery("select o from Organization o where o.user.id = :userId", Organization.class)
+                .setParameter("userId", id)
+                .getResultList();
     }
 }
