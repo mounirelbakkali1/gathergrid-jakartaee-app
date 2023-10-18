@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "organisers")
+@Table(name = "organisations")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Organiser {
+public class Organisation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id ;
