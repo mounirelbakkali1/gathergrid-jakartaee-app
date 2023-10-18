@@ -37,7 +37,7 @@ public class Event {
     private Category category;
 
     @ManyToOne
-    private Organiser organiser;
+    private Organization organization;
 
     @Override
     public String toString() {
@@ -49,7 +49,7 @@ public class Event {
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
                 ", category=" + category.getName() +
-                ", organiser=" + organiser.getName() +
+                ", organiser=" + organization.getName() +
                 '}';
     }
 }

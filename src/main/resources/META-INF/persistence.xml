@@ -9,7 +9,7 @@
         <class>ma.youcode.gathergrid.domain.Role</class>
         <class>ma.youcode.gathergrid.domain.Event</class>
         <class>ma.youcode.gathergrid.domain.Category</class>
-        <class>ma.youcode.gathergrid.domain.Organiser</class>
+        <class>ma.youcode.gathergrid.domain.Organization</class>
         <class>ma.youcode.gathergrid.domain.Ticket</class>
         <class>ma.youcode.gathergrid.domain.Comment</class>
         <properties>
