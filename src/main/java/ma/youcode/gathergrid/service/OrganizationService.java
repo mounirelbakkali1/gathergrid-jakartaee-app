@@ -44,4 +44,13 @@ public class OrganizationService implements IOrganizationService {
         Objects.requireNonNull(organization.getName());
         return organizationRepository.saveOrganization(organization);
     }
+
+    @Override
+    public void deleteOrganization(Long id) {
+        organizationRepository.deleteOrganization(id);
+    }
+
+    public List<Organization> getAllOrganizationsByUser(Long id) {
+        return organizationRepository.findAllOrganizationsByUser(id);
+    }
 }

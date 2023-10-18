@@ -14,4 +14,6 @@ public interface IOrganizationService {
     List<Organization> getAllOrganizations();
 
     Organization saveOrganization(Organization organization);
+
+    void deleteOrganization(Long id);
 }

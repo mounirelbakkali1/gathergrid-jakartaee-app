@@ -67,4 +67,11 @@ public class UserRepositoryImpl implements UserRepository {
     public List<User> findAll() {
         return em.createQuery("select u from User u", User.class).getResultList();
     }
+
+    @Override
+    public Optional<User> findByName(String userName) {
+        return em.createQuery("select u from User u where u.name = :name", User.class)
+                .setParameter("name", userName)
+                .getResultStream().findAny();
+    }
 }

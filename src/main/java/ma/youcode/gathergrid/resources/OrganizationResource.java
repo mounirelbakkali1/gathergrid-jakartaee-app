@@ -35,4 +35,9 @@ public class OrganizationResource {
         organizationByName.ifPresent(organization -> response.setResult(orgDtoMapper.toDto(organization)));
         return response;
     }
+    @DELETE
+    @Path("/{id}")
+    public void deleteOrganization(@PathParam("id") Long id){
+        organizationService.deleteOrganization(id);
+    }
 }
