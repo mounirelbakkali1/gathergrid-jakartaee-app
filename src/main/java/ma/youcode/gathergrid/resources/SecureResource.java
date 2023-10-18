@@ -1,7 +1,5 @@
 package ma.youcode.gathergrid.resources;
 
-import jakarta.security.enterprise.authentication.mechanism.http.CustomFormAuthenticationMechanismDefinition;
-import jakarta.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.servlet.annotation.ServletSecurity;
@@ -14,12 +12,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Optional;
 
-@CustomFormAuthenticationMechanismDefinition(
-        loginToContinue = @LoginToContinue(
-                loginPage = "/login",
-                errorPage = "/login?error=failed"
-        )
-)
+
 @ServletSecurity(@HttpConstraint(rolesAllowed = {"USER","ADMIN"}))
 @WebServlet("/secure")
 public class SecureResource extends HttpServlet {
