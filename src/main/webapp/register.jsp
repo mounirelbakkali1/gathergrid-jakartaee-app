@@ -58,7 +58,9 @@
                 </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" id="organization"
-                           placeholder="Organization" name="organization">
+                           placeholder="Organization" name="organization" onblur="checkIfValidOrg()">
+                    <%--error message if organization already exists--%>
+                    <span class="text-danger" id="organizationError"></span>
                 </div>
                 <div class="mb-3">
                     <input type="password" class="form-control" id="password" placeholder="Password" name="password">
@@ -66,7 +68,7 @@
                 <div class="mb-3">
                     <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password" name="confirmPassword">
                 </div>
-                <div class="text-center"><button type="submit" class="btn rounded-3 btn-color px-5 mb-5 w-50 py-2">Create Account</button></div>
+                <div class="text-center"><button type="submit" class="btn rounded-3 btn-color px-5 mb-5 w-50 py-2" id="signup">Create Account</button></div>
                 <div id="emailHelp" class="form-text text-center mb-5 text-dark">Have
                     An account? <a href="login" class="text-dark fw-bold">Login</a>
                 </div>
@@ -77,4 +79,20 @@
 </div>
 </body>
 <jsp:include page="components/js-scripts.jsp"></jsp:include>
+<script>
+        function checkIfValidOrg(){
+            var value = document.getElementById("organization").value;
+            $.get("http://localhost:8080/GatherGrid-1.0-SNAPSHOT/api/organizations/"+value,function (data,status){
+                if(status === "success"){
+                    if(data.result!=null) {
+                        $("#organizationError").text("Organization already exists");
+                        $("#signup").attr("disabled",true);
+                    }else{
+                        $("#organizationError").text("");
+                        $("#signup").attr("disabled",false);
+                    }
+                }
+            })
+        }
+</script>
 </html>
