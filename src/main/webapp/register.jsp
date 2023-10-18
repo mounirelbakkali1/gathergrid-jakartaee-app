@@ -3,6 +3,9 @@
 <html>
 <head>
     <style>
+        body{
+            padding: 0 !important;
+        }
         .btn-color{
             background-color: #22134C !important;
             color: #fff !important;
@@ -10,6 +13,11 @@
         }
         a{
             text-decoration: none;
+        }
+
+        .register-image{
+            height: 100vh;
+
         }
     </style>
     <%@ include file="components/head.jsp"%>
@@ -19,7 +27,7 @@
 
 <div class="d-flex">
 <%--    <img src="v859-katie-11.jpg" class="col-md-5"  alt="img">--%>
-    <img src='<c:url value="/files/login.jpg"></c:url>' />
+    <img class="col-md-5 register-image" src='<c:url value="/files/login.jpg"></c:url>' />
 
 
 
