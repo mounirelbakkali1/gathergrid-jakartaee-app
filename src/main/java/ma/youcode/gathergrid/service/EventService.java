@@ -1,12 +1,14 @@
 package ma.youcode.gathergrid.service;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.repositories.EventRepository;
 import ma.youcode.gathergrid.utils.Response;
 
+import java.util.ArrayList;
 import java.util.List;
-
+@RequestScoped
 public class EventService {
     private EventRepository eventRepository;
 
@@ -18,15 +20,21 @@ public class EventService {
     }
 
     public Response<Event> createEvent(Event event){
-        //if(event)
-        // new Response ;
+        Response<Event> eventResponse = new Response<>();
+        ArrayList<Error>  errors = new ArrayList<Error>() ;
+        if(event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty() ){
+            errors.add(new Error("All Fields are required"));
+            eventResponse.setError(errors);
+        }else{
+            eventRepository.save(event);
+            eventResponse.setResult(event);
+        }
+        return eventResponse;
+    }
 
-        //Response<Event> eventResponse = new Response<>();
-        //eventResponse.setError(List.of());
-        //return eventResponse;
-
-        //eventRepository.save(event);
-        //return event;
-        return null;
+    public Response<List<Event>> getAllEvents(){
+        Response<List<Event>> eventResponse = new Response<>();
+        eventResponse.setResult(eventRepository.findAll());
+        return eventResponse;
     }
 }
