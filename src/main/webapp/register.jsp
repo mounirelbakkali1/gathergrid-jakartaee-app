@@ -3,31 +3,31 @@
 <html>
 <head>
     <style>
+        body{
+            padding: 0 !important;
+        }
         .btn-color{
             background-color: #22134C !important;
             color: #fff !important;
 
         }
-        .profile-image-pic{
-            height: 200px;
-            width: 200px;
-            object-fit: cover;
-        }
-        .cardbody-color{
-            background-color: #ebf2fa;
-        }
-
         a{
             text-decoration: none;
         }
+
+        .register-image{
+            height: 100vh;
+
+        }
     </style>
+    <%@ include file="components/head.jsp"%>
     <title>Register</title>
 </head>
 <body>
 
 <div class="d-flex">
 <%--    <img src="v859-katie-11.jpg" class="col-md-5"  alt="img">--%>
-    <img src='<c:url value="/files/login.jpg"></c:url>' />
+    <img class="col-md-5 register-image" src='<c:url value="/files/login.jpg"></c:url>' />
 
 
 
@@ -55,6 +55,10 @@
                 <div class="mb-3">
                     <input type="text" class="form-control" id="email" aria-describedby="emailHelp"
                            placeholder="Email" name="email">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="organization"
+                           placeholder="Organization" name="organization">
                 </div>
                 <div class="mb-3">
                     <input type="password" class="form-control" id="password" placeholder="Password" name="password">

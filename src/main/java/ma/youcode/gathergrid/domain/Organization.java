@@ -7,17 +7,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "organisers")
+@Table(name = "organizations")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Organiser {
+public class Organization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id ;
 
     private String name;
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
 }

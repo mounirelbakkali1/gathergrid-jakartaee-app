@@ -41,8 +41,8 @@ public class LoginServlet extends HttpServlet {
         AuthenticationStatus status = securityContext.authenticate(request,response, AuthenticationParameters.withParams().credential(credential));
         if(status.equals(AuthenticationStatus.SEND_FAILURE)){
             response.sendRedirect("login?error=failed");
-        }else if(status.equals(AuthenticationStatus.SEND_CONTINUE)){
-            response.sendRedirect("/");
+        }else if(status.equals(AuthenticationStatus.SUCCESS)){
+            request.getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(request,response);
         }
     }
 }
