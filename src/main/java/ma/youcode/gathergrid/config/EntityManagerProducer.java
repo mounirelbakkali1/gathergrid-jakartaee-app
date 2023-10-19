@@ -1,19 +1,16 @@
 package ma.youcode.gathergrid.config;
 
 
-import jakarta.enterprise.context.ConversationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Disposes;
+import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.Produces;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.io.Serializable;
 
-
-@ConversationScoped
-public class EntityManagerProducer implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Model
+public class EntityManagerProducer  {
 
     private EntityManager em;
 
@@ -24,6 +21,7 @@ public class EntityManagerProducer implements Serializable {
 
     @Produces
     @UserDatabase
+    @ApplicationScoped
     public EntityManager produceEntityManager() {
         return em;
     }

@@ -5,6 +5,7 @@ import jakarta.enterprise.inject.Alternative;
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import ma.youcode.gathergrid.domain.Organization;
 import ma.youcode.gathergrid.domain.User;
 import ma.youcode.gathergrid.repositories.UserRepository;
 import ma.youcode.gathergrid.repositories.UserRepositoryImpl;
@@ -16,10 +17,12 @@ import java.util.Optional;
 public class UserService {
 
     private  UserRepository userRepository;
+    private IOrganizationService organizationService;
 
     @Inject
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, IOrganizationService organizationService) {
         this.userRepository = userRepository;
+        this.organizationService = organizationService;
     }
 
     public UserService() {
@@ -30,6 +33,10 @@ public class UserService {
         System.out.println("Registering user: " + user);
         userRepository.save(user);
         return user;
+    }
+
+    public Optional<User> findUserByUsername(String userName) {
+        return userRepository.findByName(userName);
     }
 
     @Transactional(Transactional.TxType.REQUIRED)

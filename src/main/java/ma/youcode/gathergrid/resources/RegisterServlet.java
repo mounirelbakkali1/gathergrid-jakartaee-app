@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ma.youcode.gathergrid.domain.Organization;
 import ma.youcode.gathergrid.domain.User;
 import ma.youcode.gathergrid.service.UserService;
 
@@ -36,12 +37,15 @@ public class RegisterServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String ConfirmPassword = request.getParameter("confirmPassword");
+        String organization = request.getParameter("organization");
         User user = new User();
         user.setName(name);
         user.setEmail(email);
         user.setUsername(username);
         user.setPassword(password);
         if(userService.validLoginDetails(user) && password.equals(ConfirmPassword)) {
+            Organization org = Organization.builder().name(organization).build();
+            user.addOrganization(org);
             userService.registerUser(user);
             response.sendRedirect("login");
         } else {

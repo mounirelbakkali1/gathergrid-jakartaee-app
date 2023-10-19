@@ -23,21 +23,24 @@ public class EventRepositoryImpl implements EventRepository{
     }
 
     @Override
-    @Transactional
     public void save(Event event) {
+        em.getTransaction().begin();
         em.persist(event);
+        em.getTransaction().commit();
     }
 
     @Override
-    @Transactional
     public void update(Event event) {
+        em.getTransaction().begin();
         em.merge(event);
+        em.getTransaction().commit();
     }
 
     @Override
-    @Transactional
     public void delete(Event event) {
+        em.getTransaction().begin();
         em.remove(event);
+        em.getTransaction().commit();
     }
 
     @Override
