@@ -3,6 +3,7 @@ package ma.youcode.gathergrid.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @Table(name = "categories")
 @Data
+@NoArgsConstructor
 public class Category {
 
     @Id
