@@ -21,15 +21,16 @@ public class EventService {
 
     public Response<Event> createEvent(Event event){
         Response<Event> eventResponse = new Response<>();
-        ArrayList<Error>  errors = new ArrayList<Error>() ;
-        if(event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty() ){
-            errors.add(new Error("All Fields are required"));
-            eventResponse.setError(errors);
-        }else{
-            eventRepository.save(event);
-            eventResponse.setResult(event);
-        }
+        eventRepository.save(event);
+        eventResponse.setResult(event);
         return eventResponse;
+    }
+    public List<Error> validate(Event event){
+        ArrayList<Error> errors = new ArrayList<Error>() ;
+        if(event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty()){
+            errors.add(new Error("All Fields are required"));
+        }
+        return errors;
     }
 
     public Response<List<Event>> getAllEvents(){

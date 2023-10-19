@@ -34,7 +34,10 @@
     </div>
     <div>
         <h4>List of your events</h4>
-        <a href="create-event">Create Event</a>
+        <form action="event" method="get">
+            <input hidden="hidden" name="action" value="post">
+            <button type="submit">Create Event</button>
+        </form>
     </div>
 </body>
 <jsp:include page="../components/js-scripts.jsp"></jsp:include>
