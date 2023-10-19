@@ -48,7 +48,9 @@
         <div class="form-group">
             <label>Category:</label>
             <select class="form-control" name="category">
-                <option value="1">TEST</option>
+                <c:forEach items="${categories}" var="categories">
+                    <option value="${categories.id}">${categories.name}</option>
+                </c:forEach>
             </select>
         </div>
         <c:choose>
