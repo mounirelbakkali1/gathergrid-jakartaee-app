@@ -7,11 +7,9 @@
     <jsp:include page="../components/table.jsp"/>
 </head>
 <body>
+
     <h1>you are in dashboard</h1>
-
-
-<h4>List of your organization</h4>
-
+    <h4>List of your organization</h4>
     <div class="container">
         <table class="table">
             <thead>
@@ -33,6 +31,10 @@
             </c:forEach>
             </tbody>
         </table>
+    </div>
+    <div>
+        <h4>List of your events</h4>
+        <a href="create-event">Create Event</a>
     </div>
 </body>
 <jsp:include page="../components/js-scripts.jsp"></jsp:include>
