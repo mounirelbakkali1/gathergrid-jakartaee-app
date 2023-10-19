@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSP - Hello World</title>
+     <title>Gather Grid</title>
     <%@include file="components/head.jsp"%>
 
 </head>
@@ -48,9 +48,8 @@
         margin: 0 13vw;
     }
 </style>
+
 <jsp:include page="/components/navbar.jsp"></jsp:include>
-
-
 
 <section class="d-flex first-section ">
     <div class="container col-md-6 col-12 d-flex align-items-center">
