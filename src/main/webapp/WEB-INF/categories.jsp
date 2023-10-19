@@ -22,13 +22,6 @@
         <label for="description">description:</label>
         <input type="text" id="description" name="description" required>
     </div>
-    <div>
-        <select name="category">
-            <option value="Wedding" >Wedding</option>
-            <option value="Festival" >Festival</option>
-            <option value="Trade" >Trade</option>
-        </select>
-    </div>
     <input type="submit" value="Create">
 </form>
 
