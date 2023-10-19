@@ -34,7 +34,10 @@
 
 
     <div class="col-md-7">
+            <a href="/gg" class="text-dark m-5 text-decoration-none">< Back</a>
+
         <div class="">
+
             <form class=" p-lg-5" action="register" method="post">
 
                 <div class="text-center">
