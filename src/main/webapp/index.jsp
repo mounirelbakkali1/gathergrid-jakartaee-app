@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSP - Hello World</title>
+     <title>Gather Grid</title>
     <%@include file="components/head.jsp"%>
 
 </head>
