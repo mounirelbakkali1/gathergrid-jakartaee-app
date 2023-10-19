@@ -43,4 +43,11 @@ public class CategoryService {
         return categoryResponse;
     }
 
+    public Response<Category> getCategoryById(long id){
+        Response<Category> categoryResponse = new Response<Category>();
+        Category category = categoryRepository.findById(id);
+        categoryResponse.setResult(category);
+        return categoryResponse ;
+    }
+
 }
