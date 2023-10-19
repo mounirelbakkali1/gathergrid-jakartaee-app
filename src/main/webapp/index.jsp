@@ -84,7 +84,7 @@
                     <li><a class="dropdown-item" href="login">Login</a></li>
                     <li><a class="dropdown-item" href="register">Register</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="secure">secure</a></li>
+                    <li><a class="dropdown-item" href="profile">profile</a></li>
                 </ul>
 
                 <!-- <a href="#"><box-icon name='user'></box-icon></a> -->
