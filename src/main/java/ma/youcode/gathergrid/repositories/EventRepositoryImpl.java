@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequestScoped
+@Transactional()
 public class EventRepositoryImpl implements EventRepository{
 
     private EntityManager em;
@@ -26,9 +27,7 @@ public class EventRepositoryImpl implements EventRepository{
 
     @Override
     public void save(Event event) {
-        em.getTransaction().begin();
         em.persist(event);
-        em.getTransaction().commit();
     }
 
     @Override
