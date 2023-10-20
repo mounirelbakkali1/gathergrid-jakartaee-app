@@ -38,6 +38,38 @@
             <input hidden="hidden" name="action" value="post">
             <button type="submit">Create Event</button>
         </form>
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Organization</th>
+                    <th>Date</th>
+                    <th>Hour</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${events}" var="events">
+                    <tr>
+                        <td data-label="first-name">${events.name}</td>
+                        <td data-label="last-name">${events.description}</td>
+                        <td data-label="last-name">${events.category.name}</td>
+                        <td data-label="first-name">${events.location}</td>
+                        <td data-label="last-name">${events.organization.name}</td>
+                        <td data-label="first-name">${events.date}</td>
+                        <td data-label="last-name">${events.hour}</td>
+                        <td data-label="last-name">
+                            <button class="btn btn-warning" >Edit</button>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 <jsp:include page="../components/js-scripts.jsp"></jsp:include>
