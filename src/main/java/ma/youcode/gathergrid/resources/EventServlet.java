@@ -1,6 +1,7 @@
 package ma.youcode.gathergrid.resources;
 
 
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.Time;
 import jakarta.inject.Inject;
@@ -43,6 +44,12 @@ public class EventServlet extends HttpServlet {
         String userName = req.getUserPrincipal().getName();
         long userId = userService.findUserByUsername(userName).get().getId();
         List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(userId);
+
+        String eventId = req.getParameter("id");
+        if(req.getParameter("id") != null){
+            req.setAttribute("event",eventService.findById(Integer.parseInt(eventId)));
+        }
+
         req.setAttribute("organizations",allOrganizationsByUser);
         req.setAttribute("categories",categoryService
                                             .getAllCategories()
@@ -79,5 +86,24 @@ public class EventServlet extends HttpServlet {
         );
         req.setAttribute("response",eventResponse);
         this.doGet(req,resp);
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html");
+
+        // Get the PrintWriter to write the response
+        PrintWriter out = resp.getWriter();
+
+        // Write the HTML content to the response
+        out.println("<html>");
+        out.println("<head><title>My Servlet</title></head>");
+        out.println("<body>");
+        out.println("<h1>Hello, World!</h1>");
+        out.println("</body>");
+        out.println("</html>");
+
+        // Close the PrintWriter
+        out.close();
     }
 }

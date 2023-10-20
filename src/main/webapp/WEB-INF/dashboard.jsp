@@ -62,7 +62,7 @@
                         <td data-label="first-name">${events.date}</td>
                         <td data-label="last-name">${events.hour}</td>
                         <td data-label="last-name">
-                            <button class="btn btn-warning" >Edit</button>
+                            <a class="btn btn-warning" href="event?id=${events.id}" >Edit</a>
                         </td>
                     </tr>
                 </c:forEach>

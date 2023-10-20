@@ -31,17 +31,23 @@ public class EventService {
         }
         return eventResponse;
     }
+
+    public Response<List<Event>> getAllEvents(){
+        Response<List<Event>> eventResponse = new Response<>();
+        eventResponse.setResult(eventRepository.findAll());
+        return eventResponse;
+    }
+
+    public Response<Event> findById(long id) {
+        Event event = eventRepository.findById(id);
+        if(event != null) errors.add()
+
+    }
     public void validate(Event event){
         if( event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty()){
             this.errors.add(new Error("All Fields are required"));
         }else if(event.getCategory() == null || event.getOrganization() == null){
             this.errors.add(new Error("Invalid Category or organization"));
         }else if( event.getNumberOfTicketsAvailable() < 10) this.errors.add(new Error("Invalid Number of places"));
-    }
-
-    public Response<List<Event>> getAllEvents(){
-        Response<List<Event>> eventResponse = new Response<>();
-        eventResponse.setResult(eventRepository.findAll());
-        return eventResponse;
     }
 }
