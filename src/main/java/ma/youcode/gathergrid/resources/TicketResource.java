@@ -3,6 +3,8 @@ package ma.youcode.gathergrid.resources;
 import jakarta.inject.Inject;
 import jakarta.security.enterprise.SecurityContext;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.HttpConstraint;
+import jakarta.servlet.annotation.ServletSecurity;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @WebServlet(name = "reserveTicket", urlPatterns = "/reservations/new/*")
 @NoArgsConstructor
 @Transactional
+@ServletSecurity(@HttpConstraint(rolesAllowed = {"USER","ADMIN"}))
 public class TicketResource extends HttpServlet {
 
     private EventService eventService;
@@ -61,11 +64,7 @@ public class TicketResource extends HttpServlet {
         String eventName = req.getParameter("eventName");
         String ticketType = req.getParameter("ticketType");
         String quantity = req.getParameter("quantity");
-        Optional<User> userOptional = userService.findUserByUsername(securityContext.getCallerPrincipal().getName());
-        if (userOptional.isEmpty()){
-            resp.sendError(404,"User not found");
-        }
-        User user = userOptional.get();
+        User user = userService.findUserByUsername(securityContext.getCallerPrincipal().getName()).get();
         TicketDto ticketDto = TicketDto.builder()
                 .username(user.getUsername())
                 .eventName(eventName)
