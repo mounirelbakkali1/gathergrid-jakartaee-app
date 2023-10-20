@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Category;
+import ma.youcode.gathergrid.utils.Response;
+
 import java.util.List;
 
 @RequestScoped
