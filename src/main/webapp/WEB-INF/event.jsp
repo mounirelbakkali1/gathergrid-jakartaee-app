@@ -75,9 +75,9 @@
         </div>
         <div class="form-group">
             <label>Your Beloved Organizations:</label>
-            <select class="form-control" name="category">
+            <select class="form-control" name="organization">
                 <c:forEach items="${organizations}" var="organization">
-                    <option value="${categories.id}" ${organization.id == 1 ? 'selected' : '' } >${organization.name}</option>
+                    <option value="${organization.id}" ${organization.id == 1 ? 'selected' : '' } >${organization.name}</option>
                 </c:forEach>
             </select>
         </div>
