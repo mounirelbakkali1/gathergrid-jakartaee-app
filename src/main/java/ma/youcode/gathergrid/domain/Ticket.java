@@ -32,6 +32,6 @@ public class Ticket {
     @ManyToOne
     private User user;
 
-    @Column(name = "reservation_date", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    @Column(name = "reservation_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date reservationDate;
 }

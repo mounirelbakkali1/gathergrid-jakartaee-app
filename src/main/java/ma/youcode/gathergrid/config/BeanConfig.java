@@ -24,11 +24,5 @@ public class BeanConfig {
     public IOrganizationService organizationService(){
         return new OrganizationService();
     }
-
-    @Produces
-    @MyQualifier
-    public TicketRepository ticketRepository(){
-        return new TicketRepositoryImpl();
-    }
 }
 
