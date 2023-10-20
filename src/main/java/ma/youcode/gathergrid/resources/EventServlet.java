@@ -43,12 +43,10 @@ public class EventServlet extends HttpServlet {
         String userName = req.getUserPrincipal().getName();
         long userId = userService.findUserByUsername(userName).get().getId();
         List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(userId);
-
         req.setAttribute("organizations",allOrganizationsByUser);
         req.setAttribute("categories",categoryService
                                             .getAllCategories()
                                             .getResult());
-
         req.getRequestDispatcher("/WEB-INF/event.jsp").forward(req,resp);
     }
 
@@ -80,6 +78,6 @@ public class EventServlet extends HttpServlet {
                         .build()
         );
         req.setAttribute("response",eventResponse);
-        req.getRequestDispatcher("/WEB-INF/event.jsp").forward(req,resp);
+        this.doGet(req,resp);
     }
 }
