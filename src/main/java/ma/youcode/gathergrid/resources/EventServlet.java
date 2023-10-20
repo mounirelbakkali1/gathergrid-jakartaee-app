@@ -2,7 +2,7 @@ package ma.youcode.gathergrid.resources;
 
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.sql.Time;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.HttpConstraint;
@@ -16,10 +16,12 @@ import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.domain.Organization;
 import ma.youcode.gathergrid.service.CategoryService;
 import ma.youcode.gathergrid.service.EventService;
+import ma.youcode.gathergrid.service.OrganizationService;
 import ma.youcode.gathergrid.service.UserService;
 import ma.youcode.gathergrid.utils.Response;
 
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,13 +34,17 @@ public class EventServlet extends HttpServlet {
     private EventService eventService;
     @Inject
     private CategoryService categoryService;
+    @Inject
+    private OrganizationService organizationService;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String userName = req.getUserPrincipal().getName();
-        //User userId = userService.findUserByUsername(userName).get().getId();
-
+        long userId = userService.findUserByUsername(userName).get().getId();
+        List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(userId);
         req.setAttribute("action",req.getParameter("action"));
+        req.setAttribute("organizations",allOrganizationsByUser);
         req.setAttribute("categories",categoryService
                                             .getAllCategories()
                                             .getResult());
@@ -49,34 +55,26 @@ public class EventServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Response<Event> eventResponse = new Response<>();
-        Date eventDate = new Date(1970);
-        try {
-            eventDate = new Date(
-                    new SimpleDateFormat("dd-MM-yyyy")
-                    .parse(req.getParameter("date")
-            ).getTime());
-        } catch (Exception e) {
-            eventResponse.setError(List.of(new Error("Date error")));
-        }
-
-        long millisecondsSinceMidnight = 12 * 60 * 60 * 1000; // 12:00:00 in milliseconds
-        java.sql.Time time = new java.sql.Time(millisecondsSinceMidnight);
-
-        Category category = categoryService.getCategoryById(
+        String name = req.getParameter("name");
+        String description = req.getParameter("description");
+        Date date = Date.valueOf(req.getParameter("date"));
+        Time time = Time.valueOf(req.getParameter("time") + ":00");
+        String location = req.getParameter("location");
+        Category category = Category.builder().id(
                 Long.parseLong(req.getParameter("category"))
-        ).getResult();
-
+        ).build();
+        Organization organization = Organization.builder().id(
+                Long.parseLong(req.getParameter("organization"))
+        ).build();
         eventResponse = eventService.createEvent(
                 Event.builder()
-                        .name(req.getParameter("name"))
-                        .description(req.getParameter("description"))
-                        .date(eventDate)
+                        .name(name)
+                        .description(description)
+                        .date(date)
                         .hour(time)
-                        .location(req.getParameter("location"))
+                        .location(location)
                         .category(category)
-                        .organization(
-                                Organization.builder().id(Long.parseLong("1")).build()
-                        )
+                        .organization(organization)
                         .build()
         );
         req.setAttribute("response",eventResponse);
