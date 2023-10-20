@@ -34,7 +34,7 @@ public class EventService {
     public void validate(Event event){
         if( event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty()){
             this.errors.add(new Error("All Fields are required"));
-        }else if(event.getCategory().getName() == null || event.getOrganization().getName() == null){
+        }else if(event.getCategory() == null || event.getOrganization() == null){
             this.errors.add(new Error("Invalid Category or organization"));
         }
     }
