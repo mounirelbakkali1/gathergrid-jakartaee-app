@@ -33,8 +33,42 @@
         </table>
     </div>
     <div>
-        <h4>List of your events</h4>
-        <a href="create-event">Create Event</a>
+        <div class="d-flex justify-content-between">
+            <h4>List of your events</h4>
+            <a href="event">Create Event</a>
+        </div>
+        <div class="container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Organization</th>
+                    <th>Date</th>
+                    <th>Hour</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${events}" var="events">
+                    <tr>
+                        <td data-label="first-name">${events.name}</td>
+                        <td data-label="last-name">${events.description}</td>
+                        <td data-label="last-name">${events.category.name}</td>
+                        <td data-label="first-name">${events.location}</td>
+                        <td data-label="last-name">${events.organization.name}</td>
+                        <td data-label="first-name">${events.date}</td>
+                        <td data-label="last-name">${events.hour}</td>
+                        <td data-label="last-name">
+                            <button class="btn btn-warning" >Edit</button>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 <jsp:include page="../components/js-scripts.jsp"></jsp:include>

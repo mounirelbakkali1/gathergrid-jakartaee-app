@@ -42,7 +42,7 @@ public class DashboardServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("events",eventService.getAllEvents());
+        req.setAttribute("events",eventService.getAllEvents().getResult());
         List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(this.userId);
         req.setAttribute("organizations", allOrganizationsByUser);
         req.getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(req, resp);

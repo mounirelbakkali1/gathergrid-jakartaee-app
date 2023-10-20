@@ -12,6 +12,8 @@ import java.util.List;
 public class EventService {
     private EventRepository eventRepository;
 
+    private List<Error> errors = new ArrayList<>();
+
     @Inject
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
@@ -21,15 +23,20 @@ public class EventService {
 
     public Response<Event> createEvent(Event event){
         Response<Event> eventResponse = new Response<>();
-        ArrayList<Error>  errors = new ArrayList<Error>() ;
-        if(event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty() ){
-            errors.add(new Error("All Fields are required"));
-            eventResponse.setError(errors);
-        }else{
+        validate(event);
+        if(!this.errors.isEmpty()) eventResponse.setError(this.errors);
+        else{
             eventRepository.save(event);
             eventResponse.setResult(event);
         }
         return eventResponse;
+    }
+    public void validate(Event event){
+        if( event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty()){
+            this.errors.add(new Error("All Fields are required"));
+        }else if(event.getCategory() == null || event.getOrganization() == null){
+            this.errors.add(new Error("Invalid Category or organization"));
+        }else if( event.getNumberOfTicketsAvailable() < 10) this.errors.add(new Error("Invalid Number of places"));
     }
 
     public Response<List<Event>> getAllEvents(){

@@ -1,10 +1,8 @@
 package ma.youcode.gathergrid.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import ma.youcode.gathergrid.utils.Response;
 
 import java.sql.Time;
 import java.util.Date;
@@ -15,6 +13,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Event {
 
     @Id
@@ -38,6 +37,13 @@ public class Event {
 
     @ManyToOne
     private Organization organization;
+
+    @Column(name = "available_tickets")
+    private int numberOfTicketsAvailable;
+
+
+
+
 
     @Override
     public String toString() {

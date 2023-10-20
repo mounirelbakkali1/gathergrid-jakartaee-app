@@ -9,6 +9,7 @@ import ma.youcode.gathergrid.domain.Event;
 
 import java.util.List;
 @RequestScoped
+@Transactional()
 public class EventRepositoryImpl implements EventRepository{
 
     private EntityManager em;
@@ -24,9 +25,7 @@ public class EventRepositoryImpl implements EventRepository{
 
     @Override
     public void save(Event event) {
-        em.getTransaction().begin();
         em.persist(event);
-        em.getTransaction().commit();
     }
 
     @Override
