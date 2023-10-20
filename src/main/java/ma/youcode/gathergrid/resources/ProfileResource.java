@@ -32,9 +32,11 @@ public class ProfileResource extends HttpServlet {
         private EventService eventService;
         private User user;
         @Inject
-        public ProfileResource(SecurityContext securityContext, UserService userService, OrganizationService organizationService , EventService eventService) {
+        public ProfileResource(SecurityContext securityContext, UserService userService, OrganizationService organizationService, EventService eventService) {
                 this.securityContext = securityContext;
                 this.userService = userService;
+                this.organizationService = organizationService;
+                this.eventService = eventService;
         }
 
         @Override
