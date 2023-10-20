@@ -1,9 +1,8 @@
 <style>
-    body {
+    body .container-fluid.main {
         margin: 0;
-        padding-top: 40px;
+        padding: 40px;
         color: #2e323c;
-        background: #f5f6fa;
         position: relative;
         height: 100%;
     }
@@ -50,6 +49,7 @@
         font-size: .825rem;
         background: #ffffff;
         color: #2e323c;
+        padding: 9px;
     }
 
     .card {

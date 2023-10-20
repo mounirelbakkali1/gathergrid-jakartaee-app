@@ -39,13 +39,18 @@ public class UserService {
     public Optional<User> findUserByUsername(String userName) {
         return userRepository.findByName(userName);
     }
-
     @Transactional(Transactional.TxType.REQUIRED)
     public User updateUserInfo(@Valid User user) {
-        if (userRepository.findByUsername(user.getUsername()).isEmpty()) {
+        Optional<User> optionalUser = userRepository.findByUsername(user.getUsername());
+        if (optionalUser.isEmpty()) {
             throw new IllegalArgumentException("User not found");
         }
-        userRepository.update(user);
+        User usr = optionalUser.get();
+        usr.setName(user.getName());
+        usr.setUsername(user.getUsername());
+        usr.setPassword(user.getPassword());
+        usr.setEmail(user.getEmail());
+        userRepository.update(usr);
         return user;
     }
 
