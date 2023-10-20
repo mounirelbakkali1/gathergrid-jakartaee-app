@@ -38,8 +38,10 @@ public class Event {
     @ManyToOne
     private Organization organization;
 
-    @Column(name = "max_tickets")
-    private int maxTickets;
+    @Column(name = "available_tickets")
+    private int numberOfTicketsAvailable;
+
+
 
 
 

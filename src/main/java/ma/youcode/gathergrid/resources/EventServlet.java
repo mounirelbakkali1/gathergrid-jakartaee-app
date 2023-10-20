@@ -76,7 +76,7 @@ public class EventServlet extends HttpServlet {
                         .location(location)
                         .category(category)
                         .organization(organization)
-                        .maxTickets(maxTickets)
+                        .numberOfTicketsAvailable(maxTickets)
                         .build()
         );
         req.setAttribute("response",eventResponse);
