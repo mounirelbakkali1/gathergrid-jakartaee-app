@@ -43,7 +43,8 @@ public class EventServlet extends HttpServlet {
         String userName = req.getUserPrincipal().getName();
         long userId = userService.findUserByUsername(userName).get().getId();
         List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(userId);
-        req.setAttribute("action",req.getParameter("action"));
+
+        req.setAttribute("event",allOrganizationsByUser);
         req.setAttribute("organizations",allOrganizationsByUser);
         req.setAttribute("categories",categoryService
                                             .getAllCategories()

@@ -33,11 +33,10 @@
         </table>
     </div>
     <div>
-        <h4>List of your events</h4>
-        <form action="event" method="get">
-            <input hidden="hidden" name="action" value="post">
-            <button type="submit">Create Event</button>
-        </form>
+        <div class="d-flex justify-content-between">
+            <h4>List of your events</h4>
+            <a href="event">Create Event</a>
+        </div>
         <div class="container">
             <table class="table">
                 <thead>

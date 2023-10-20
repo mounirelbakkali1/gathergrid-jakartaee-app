@@ -44,7 +44,7 @@
             </c:when>
         </c:choose>
     </div>
-    <form action="event" method="${requestScope.get("action")}">
+    <form action="event" method="${event != null ? 'put' : 'post'}">
         <div class="form-group">
             <label for="Name">Name:</label>
             <input type="text" class="form-control" id="Name" name="name" required>
@@ -82,15 +82,15 @@
             </select>
         </div>
         <c:choose>
-            <c:when test="${action eq 'post'}">
+            <c:when test="${event == null}">
                 <button type="submit" class="btn btn-primary">Create</button>
             </c:when>
-            <c:when test="${action eq 'put'}">
+            <c:otherwise>
                 <div>
                     <button type="submit" class="btn btn-warning">Edit</button>
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </div>
-            </c:when>
+            </c:otherwise>
         </c:choose>
     </form>
     <br>
