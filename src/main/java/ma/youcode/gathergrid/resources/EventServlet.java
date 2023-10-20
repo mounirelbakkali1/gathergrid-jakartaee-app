@@ -44,7 +44,6 @@ public class EventServlet extends HttpServlet {
         long userId = userService.findUserByUsername(userName).get().getId();
         List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(userId);
 
-        req.setAttribute("event",allOrganizationsByUser);
         req.setAttribute("organizations",allOrganizationsByUser);
         req.setAttribute("categories",categoryService
                                             .getAllCategories()
@@ -67,6 +66,7 @@ public class EventServlet extends HttpServlet {
         Organization organization = Organization.builder().id(
                 Long.parseLong(req.getParameter("organization"))
         ).build();
+        int maxTickets = Integer.parseInt(req.getParameter("maxTickets"));
         eventResponse = eventService.createEvent(
                 Event.builder()
                         .name(name)
@@ -76,6 +76,7 @@ public class EventServlet extends HttpServlet {
                         .location(location)
                         .category(category)
                         .organization(organization)
+                        .maxTickets(maxTickets)
                         .build()
         );
         req.setAttribute("response",eventResponse);

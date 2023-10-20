@@ -81,6 +81,10 @@
                 </c:forEach>
             </select>
         </div>
+        <div class="form-group">
+            <label>Available Places:</label>
+            <input type="number" min="10" name="maxTickets">
+        </div>
         <c:choose>
             <c:when test="${event == null}">
                 <button type="submit" class="btn btn-primary">Create</button>

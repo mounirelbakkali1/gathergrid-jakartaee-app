@@ -38,6 +38,9 @@ public class Event {
     @ManyToOne
     private Organization organization;
 
+    @Column(name = "max_tickets")
+    private int maxTickets;
+
 
 
     @Override

@@ -36,7 +36,7 @@ public class EventService {
             this.errors.add(new Error("All Fields are required"));
         }else if(event.getCategory() == null || event.getOrganization() == null){
             this.errors.add(new Error("Invalid Category or organization"));
-        }
+        }else if( event.getMaxTickets() < 10) this.errors.add(new Error("Invalid Number of places"));
     }
 
     public Response<List<Event>> getAllEvents(){
