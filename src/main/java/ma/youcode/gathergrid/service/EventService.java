@@ -8,6 +8,8 @@ import ma.youcode.gathergrid.utils.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @RequestScoped
 public class EventService {
     private EventRepository eventRepository;
@@ -43,5 +45,13 @@ public class EventService {
         Response<List<Event>> eventResponse = new Response<>();
         eventResponse.setResult(eventRepository.findAll());
         return eventResponse;
+    }
+
+    public Optional<Event> getEventByName(String eventName) {
+        return eventRepository.findEventByName(eventName);
+    }
+
+    public Optional<Event> getEventById(Long eventId) {
+        return Optional.ofNullable(eventRepository.findById(eventId));
     }
 }

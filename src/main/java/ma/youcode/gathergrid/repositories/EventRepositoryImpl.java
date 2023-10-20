@@ -8,6 +8,8 @@ import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Event;
 
 import java.util.List;
+import java.util.Optional;
+
 @RequestScoped
 @Transactional()
 public class EventRepositoryImpl implements EventRepository{
@@ -45,5 +47,12 @@ public class EventRepositoryImpl implements EventRepository{
     @Override
     public List<Event> findAll() {
         return em.createQuery("Select e from Event e", Event.class).getResultList();
+    }
+
+    @Override
+    public Optional<Event> findEventByName(String eventName) {
+        return em.createQuery("select e from Event e where e.name = :eventName",Event.class)
+                .setParameter("eventName",eventName)
+                .getResultStream().findAny();
     }
 }
