@@ -5,6 +5,7 @@ import jakarta.enterprise.inject.Alternative;
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import ma.youcode.gathergrid.config.MyQualifier;
 import ma.youcode.gathergrid.domain.Organization;
 import ma.youcode.gathergrid.domain.User;
 import ma.youcode.gathergrid.repositories.UserRepository;
@@ -20,7 +21,7 @@ public class UserService {
     private IOrganizationService organizationService;
 
     @Inject
-    public UserService(UserRepository userRepository, IOrganizationService organizationService) {
+    public UserService(UserRepository userRepository,@MyQualifier IOrganizationService organizationService) {
         this.userRepository = userRepository;
         this.organizationService = organizationService;
     }

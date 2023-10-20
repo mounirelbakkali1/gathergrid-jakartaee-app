@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import ma.youcode.gathergrid.domain.Organization;
 import ma.youcode.gathergrid.dto.OrganizationDto;
 import ma.youcode.gathergrid.mapper.OrgDtoMapper;
+import ma.youcode.gathergrid.service.IOrganizationService;
 import ma.youcode.gathergrid.service.OrganizationService;
 import ma.youcode.gathergrid.utils.Response;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 @NoArgsConstructor
 public class OrganizationResource {
 
-    private OrganizationService organizationService;
+    private IOrganizationService organizationService;
     private OrgDtoMapper orgDtoMapper;
 
     @Inject
