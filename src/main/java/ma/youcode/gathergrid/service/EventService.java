@@ -79,9 +79,10 @@ public class EventService {
         }
         return eventResponse;
     }
-    public Response<Event> deleteEvent(Event event){
+    public Response<Event> deleteEvent(long id){
         Response<Event> eventResponse = new Response<>();
-        if(eventIsExist(event.getId())){
+        if(eventIsExist(id)){
+            Event event = eventRepository.findById(id);
             eventRepository.delete(event);
             eventResponse.setResult(event);
         }else eventResponse.setError(List.of(new Error("Invalid Event")));

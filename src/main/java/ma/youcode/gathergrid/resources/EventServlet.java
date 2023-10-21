@@ -78,10 +78,8 @@ public class EventServlet extends HttpServlet {
                 this.doGet(req,resp);
             }
             case "delete" -> {
-                Event event = eventBuilder(req);
                 long id = Long.parseLong(req.getParameter("id"));
-                event.setId(id);
-                eventResponse = eventService.deleteEvent(event);
+                eventResponse = eventService.deleteEvent(id);
                 req.setAttribute("response",eventResponse);
                 this.doGet(req,resp);
             }

@@ -78,7 +78,7 @@
                                         <a href="#editEmployeeModal"
                                            onclick="prepareForModal(${event.id},'${event.name}','${event.description}','${event.category.id}','${event.location}','${event.organization.id}','${event.date}','${event.hour}')"
                                            class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                        <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                        <a href="#deleteEmployeeModal" onclick="perpareToDelete(${event.id})" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -164,14 +164,14 @@
     <div id="editEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form class="edit-form">
+                <form class="edit-form" action="event" method="post">
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Employee</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
                         <input hidden="hidden" name="action" value="put" />
-                        <input name="id" class="id"   />
+                        <input name="id" class="id" />
                         <div class="form-group">
                             <label >Name:</label>
                             <input  type="text" class="form-control name"  name="name" placeholder="Event Name" required>
@@ -225,13 +225,15 @@
     <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form class="delete-form" action="event" method="post">
                     <div class="modal-header">
                         <h4 class="modal-title">Delete Employee</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <p>Are you sure you want to delete these Records?</p>
+                        <input hidden="hidden" name="action" value="delete" />
+                        <input class="id" name="id" />
+                        <p>Are you sure you want to delete these Records ?</p>
                         <p class="text-warning"><small>This action cannot be undone.</small></p>
                     </div>
                     <div class="modal-footer">
@@ -309,6 +311,9 @@
         $('.edit-form .category  option[value="' + categoryId + '"]').prop('selected', true);
         $('.edit-form .organization option').prop('selected', false);
         $('.edit-form .organization  option[value="' + organizationId + '"]').prop('selected', true);
+    }
+    function perpareToDelete(eventId){
+        $('.delete-form .id').val(eventId)
     }
 </script>
 </html>
