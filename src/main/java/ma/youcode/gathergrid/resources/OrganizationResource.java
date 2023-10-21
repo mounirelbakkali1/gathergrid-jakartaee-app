@@ -1,6 +1,7 @@
 package ma.youcode.gathergrid.resources;
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Path("organizations")
 @NoArgsConstructor
+@Transactional
 public class OrganizationResource {
 
     private IOrganizationService organizationService;

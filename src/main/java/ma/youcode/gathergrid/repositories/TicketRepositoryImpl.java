@@ -10,6 +10,7 @@ import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Ticket;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequestScoped
 @MyQualifier
@@ -27,6 +28,7 @@ public class TicketRepositoryImpl implements TicketRepository{
 
     @Override
     public void cancel(Ticket ticket) {
+        em.merge(ticket);
         em.remove(ticket);
     }
 
@@ -69,5 +71,10 @@ public class TicketRepositoryImpl implements TicketRepository{
     public List<Ticket> findAll() {
         return em.createQuery("select t from Ticket t", Ticket.class)
                 .getResultList();
+    }
+
+    @Override
+    public Optional<Ticket> findById(Long ticketId) {
+        return Optional.ofNullable(em.find(Ticket.class, ticketId));
     }
 }

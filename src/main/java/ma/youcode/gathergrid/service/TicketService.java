@@ -63,20 +63,20 @@ public class TicketService  {
                 .build();
 
     }
-    public Response<TicketDto> cancel(TicketDto ticketDto) {
-        Ticket ticket = ticketMapper.toEntity(ticketDto);
+    public Response<TicketDto> cancel(Ticket ticket) {
         // TODO : can cancel
         if(canBuyOrCancel(ticket, ticket.getReservationDate())){
             ticketRepository.cancel(ticket);
             return Response
                     .<TicketDto>builder()
-                    .result(ticketDto)
+                    .result(ticketMapper.toDto(ticket))
+                    .build();
+        }else{
+            return Response
+                    .<TicketDto>builder()
+                    .error(List.of(new Error("Can't cancel a ticket after the event date")))
                     .build();
         }
-        return Response
-                .<TicketDto>builder()
-                .result(ticketDto)
-                .build();
     }
 
     private boolean canBuyOrCancel(Ticket ticket, Date eventDate) {
@@ -115,5 +115,9 @@ public class TicketService  {
     }
     public List<Ticket> findAll() {
         return ticketRepository.findAll();
+    }
+
+    public Optional<Ticket> findById(Long ticketId) {
+        return ticketRepository.findById(ticketId);
     }
 }
