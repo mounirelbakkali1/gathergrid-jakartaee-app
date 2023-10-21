@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Event;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,7 +47,7 @@ public class EventRepositoryImpl implements EventRepository{
 
     @Override
     public List<Event> findAll() {
-        return em.createQuery("Select e from Event e", Event.class).getResultList();
+        return em.createQuery("Select e from Event e order by e.date desc", Event.class).getResultList();
     }
 
     @Override
