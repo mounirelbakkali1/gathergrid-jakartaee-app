@@ -181,6 +181,8 @@
                     </tr>
                 </c:when>
                 <c:otherwise>
+                    <c:set var="date" value="<%= java.time.LocalDateTime.now() %>" scope="request" />
+                    <jsp:useBean id="date" scope="request" type="java.time.LocalDateTime"/>
                     <c:forEach items="${tickets}" var="reservation">
                         <tr>
                             <td>${reservation.eventName}</td>
@@ -192,13 +194,13 @@
                             </td>
                             <td>${reservation.reservationDate}</td>
                             <c:choose>
-                                <c:when test="${!LocalDateTime.now().isAfter(reservation.eventDate)}">
+                                <c:when test="${date.isBefore(reservation.eventDate)}">
                                     <td>
-                                        <button class="btn btn-sm btn-danger">cancel</button>
+                                        <button class="btn btn-sm btn-danger" onclick="cancelReservation(${reservation.id})">cancel</button>
                                     </td>
                                 </c:when>
                                 <c:otherwise>
-                                    <td>--</td>
+                                    <td>------</td>
                                 </c:otherwise>
                             </c:choose>
                         </tr>
@@ -207,9 +209,24 @@
             </c:choose>
             </tbody>
         </table>
-    </div>
 </div>
 
 </body>
 <jsp:include page="../../components/js-scripts.jsp"></jsp:include>
+<script>
+    function cancelReservation(tiketId) {
+        if(window.confirm("Are you sure you want to cancel this reservation ?")){
+               $.ajax({
+                   url: '${pageContext.request.contextPath}/reservations?ticketId='+tiketId,
+                   type: 'POST',
+                   success: function(data,status) {
+                       console.log(data,status);
+                       if (status === "success") {
+                           window.location.reload();
+                       }
+                   }
+               });
+       }
+    }
+</script>
 </html>
