@@ -10,23 +10,27 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
-import lombok.NoArgsConstructor;
 import ma.youcode.gathergrid.domain.Event;
+import ma.youcode.gathergrid.domain.Ticket;
+import ma.youcode.gathergrid.domain.TicketType;
 import ma.youcode.gathergrid.domain.User;
 import ma.youcode.gathergrid.dto.TicketDto;
 import ma.youcode.gathergrid.service.EventService;
 import ma.youcode.gathergrid.service.TicketService;
 import ma.youcode.gathergrid.service.UserService;
+import ma.youcode.gathergrid.utils.Response;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
-@WebServlet(name = "reserveTicket", urlPatterns = "/reservations/new/*")
-@NoArgsConstructor
-@Transactional
+@WebServlet(name = "reserveTicket", value = "/new-reservation")
 @ServletSecurity(@HttpConstraint(rolesAllowed = {"USER","ADMIN"}))
+@Transactional
 public class TicketResource extends HttpServlet {
-
+    private User user;
+    private Event currentEvent;
     private EventService eventService;
     private TicketService ticketService;
     private UserService userService;
@@ -42,17 +46,23 @@ public class TicketResource extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        String name = securityContext.getCallerPrincipal().getName();
+        Optional<User> user = userService.findUserByUsername(name);
+        user.ifPresent(value -> this.user = value);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = req.getPathInfo();
-        Long eventId = Long.parseLong(path.split("/")[1]);
+        String path = req.getQueryString();
+        Long eventId = Long.parseLong(path.split("=")[1]);
         Optional<Event> eventById = eventService.getEventById(eventId);
         if(eventById.isEmpty()){
             resp.sendError(404,"Event not found");
         }else{
-            req.setAttribute("event",eventById.get());
+            currentEvent = eventById.get();
+            req.setAttribute("event",currentEvent);
+            // ticket type array from enum
+            req.setAttribute("ticketTypes", List.of(TicketType.values()));
             req.getRequestDispatcher("/WEB-INF/views/reserveTicket.jsp").forward(req,resp);
         }
 
@@ -61,19 +71,23 @@ public class TicketResource extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String eventName = req.getParameter("eventName");
         String ticketType = req.getParameter("ticketType");
         String quantity = req.getParameter("quantity");
         User user = userService.findUserByUsername(securityContext.getCallerPrincipal().getName()).get();
-        TicketDto ticketDto = TicketDto.builder()
-                .username(user.getUsername())
-                .eventName(eventName)
+        Ticket ticket = Ticket.builder()
+                .user(user)
+                .event(currentEvent)
                 .quantity(Integer.parseInt(quantity))
-                .ticketType(ticketType)
+                .ticketType(TicketType.valueOf(ticketType))
+                .reservationDate(new Date(System.currentTimeMillis()))
                 .build();
-        ticketService.save(ticketDto);
-        resp.sendRedirect("/events");
-
+        Response<TicketDto> response = ticketService.save(ticket);
+        List<Error> errorList = response.getError();
+        if(errorList!=null && !errorList.isEmpty()){
+            req.setAttribute("errors", errorList);
+            req.getRequestDispatcher("/WEB-INF/views/reserveTicket.jsp").forward(req,resp);
+        }
+        resp.sendRedirect(req.getContextPath()+"/profile");
 
     }
 }

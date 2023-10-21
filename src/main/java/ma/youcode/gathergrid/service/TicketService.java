@@ -2,6 +2,7 @@ package ma.youcode.gathergrid.service;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import ma.youcode.gathergrid.config.MyQualifier;
 import ma.youcode.gathergrid.domain.Event;
@@ -11,12 +12,15 @@ import ma.youcode.gathergrid.mapper.TicketMapper;
 import ma.youcode.gathergrid.repositories.TicketRepository;
 import ma.youcode.gathergrid.utils.Response;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 @RequestScoped
 @NoArgsConstructor
+@Transactional
 public class TicketService  {
     private TicketRepository ticketRepository;
     private TicketMapper ticketMapper;
@@ -29,19 +33,16 @@ public class TicketService  {
     }
 
 
-    public Response<TicketDto> save(TicketDto ticketDto) {
-        Ticket ticket = ticketMapper.toEntity(ticketDto);
+    public Response<TicketDto> save(Ticket ticket) {
         // TODO :  check if the event exists
-        Optional<Event> eventByName = eventService.getEventByName(ticketDto.getEventName());
-        if (eventByName.isEmpty()){
+        if (ticket.getEvent()==null){
             return Response
                     .<TicketDto>builder()
                     .error(List.of(new Error("Event not found")))
                     .build();
         }
         // TODO : check if the quantity is available in the event
-        Event event = eventByName.get();
-        if(ticketDto.getQuantity() > event.getNumberOfTicketsAvailable()){
+        if(ticket.getQuantity() > ticket.getEvent().getNumberOfTicketsAvailable()){
             return Response
                     .<TicketDto>builder()
                     .error(List.of(new Error("Not enough tickets available")))
@@ -49,7 +50,7 @@ public class TicketService  {
         }
         // TODO : check if the required ticket type is available in the event
         // TODO : check if the date is valid
-        if (canBuyOrCancel(ticket, event.getDate())){
+        if (canBuyOrCancel(ticket, ticket.getEvent().getDate())){
             return Response
                     .<TicketDto>builder()
                     .error(List.of(new Error("Can't reserve a ticket after the event date")))
@@ -58,7 +59,7 @@ public class TicketService  {
         ticketRepository.save(ticket);
         return Response
                 .<TicketDto>builder()
-                .result(ticketDto)
+                .result(ticketMapper.toDto(ticket))
                 .build();
 
     }
@@ -79,7 +80,7 @@ public class TicketService  {
     }
 
     private boolean canBuyOrCancel(Ticket ticket, Date eventDate) {
-        return ticket.getReservationDate().after(eventDate);
+        return Date.from(Instant.now()).after(eventDate);
     }
 
     public List<TicketDto> findByDate(String date) {

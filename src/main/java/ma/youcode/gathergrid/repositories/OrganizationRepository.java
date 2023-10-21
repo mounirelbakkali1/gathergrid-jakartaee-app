@@ -49,7 +49,7 @@ public class OrganizationRepository {
     }
 
     public Optional<Organization> findOrganizationByName(String name){
-        return em.createQuery("select o from Organization o where o.name = :name",Organization.class)
+        return em.createQuery("select o from Organization o where lower(o.name) = :name",Organization.class)
                     .setParameter("name",name)
                     .getResultStream().findAny();
     }
