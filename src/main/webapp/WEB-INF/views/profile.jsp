@@ -170,6 +170,7 @@
                 <th scope="col">Price</th>
                 <th scope="col">Type</th>
                 <th scope="col">Took</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -185,9 +186,21 @@
                             <td>${reservation.eventName}</td>
                             <td>${reservation.eventDate}</td>
                             <td>${reservation.quantity}</td>
-                            <td>${reservation.price}</td>
-                            <td>${reservation.ticketType}</td>
+                            <td>${reservation.price}$</td>
+                            <td>
+                                <span class="badge bg-${reservation.ticketType=='VIP' ? 'info' : (reservation.ticketType=='STUDENT' ? 'primary' : 'warning ')}">${reservation.ticketType}</span>
+                            </td>
                             <td>${reservation.reservationDate}</td>
+                            <c:choose>
+                                <c:when test="${!LocalDateTime.now().isAfter(reservation.eventDate)}">
+                                    <td>
+                                        <button class="btn btn-sm btn-danger">cancel</button>
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>--</td>
+                                </c:otherwise>
+                            </c:choose>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
