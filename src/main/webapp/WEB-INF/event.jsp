@@ -11,9 +11,11 @@
 <head>
     <title>Creating Events</title>
     <jsp:include page="../components/head.jsp" />
-    <jsp:include page="../components/js-scripts.jsp" />
+    <jsp:include page="../components/my-events.jsp" />
 </head>
 <body>
+
+    <div>
     <h1>Create Events</h1>
     <div>
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -110,11 +112,16 @@
     </form>
     <br>
     <a href="dashboard">List events</a>
+    </div>
 </body>
 <script>
     function setActionThenDelete(){
-        $("#formAction").val("delete")
-        $("#eventForm").submit()
+        //$("#formAction").val("delete")
+        //$("#eventForm").submit()
+    }
+    function prepareModal(name){
+        console.log(name)
+        $("#addEmployeeModal #modalName").val(name);
     }
 </script>
 </html>
