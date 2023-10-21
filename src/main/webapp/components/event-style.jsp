@@ -53,15 +53,25 @@
         background-color: rgb(194, 131, 16);
         color: white;
         border-radius: 15px;
-        padding: 0 1rem;
+        padding: 0 0.8rem;
     }
     .blog-label-sucess {
          display: inline-block;
          background-color: rgb(9, 160, 1);
          color: white;
          border-radius: 15px;
-         padding: 0 0.7rem;
+        padding: 0 0.8rem;
+        font-size: 12px;
      }
+    #badge {
+        position: absolute;
+        background-color: #8a7575;
+        color: white;
+        padding: 5px;
+        transform: rotate(45deg);
+        top: 21px;
+        right: 2px;
+    }
 
 
     @media (min-width: 48rem) {
