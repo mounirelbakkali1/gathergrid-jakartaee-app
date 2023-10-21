@@ -78,15 +78,16 @@ public class EventServlet extends HttpServlet {
                 this.doGet(req,resp);
             }
             case "delete" -> {
-                //delete logic
+                Event event = eventBuilder(req);
+                long id = Long.parseLong(req.getParameter("id"));
+                event.setId(id);
+                eventResponse = eventService.deleteEvent(event);
+                req.setAttribute("response",eventResponse);
+                this.doGet(req,resp);
             }
         }
     }
 
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("am at doPut");
-    }
 
     private Event eventBuilder(HttpServletRequest req){
         String name = req.getParameter("name");

@@ -11,6 +11,7 @@
 <head>
     <title>Creating Events</title>
     <jsp:include page="../components/head.jsp" />
+    <jsp:include page="../components/js-scripts.jsp" />
 </head>
 <body>
     <h1>Create Events</h1>
@@ -44,20 +45,20 @@
             </c:when>
         </c:choose>
     </div>
-    <form action="event" method="post">
-        <input name="action" value="${event == null ? "post" : "put"}" />
-        <input name="id" value="${event.id}" />
+    <form id="eventForm" action="event" method="post">
+        <input id="formAction" hidden="hidden" name="action" value="${event == null ? "post" : "put"}" />
+        <input name="id" hidden="hidden" value="${event.id}" />
         <div class="form-group">
             <label for="Name">Name:</label>
-            <input value="${event.name}" type="text" class="form-control" id="Name" name="name" required>
+            <input value="${event.name}" type="text" class="form-control" id="Name" name="name" placeholder="Event Name" required>
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
-            <input value="${event.description}" type="text" class="form-control" id="description" name="description" required>
+            <input value="${event.description}" type="text" class="form-control" id="description" name="description"  placeholder="Event Description"  required>
         </div>
         <div class="form-group">
             <label for="location">Location:</label>
-            <input value="${event.location}" type="text" class="form-control" id="location" name="location" required>
+            <input value="${event.location}" type="text" class="form-control" id="location" name="location" placeholder="Event Location" required>
         </div>
         <%
             Event event = (Event) request.getAttribute("event");
@@ -93,7 +94,7 @@
         </div>
         <div class="form-group">
             <label>Available Places:</label>
-            <input type="number" min="10" value="10" required name="maxTickets">
+            <input class="form-control" type="number" min="10" value="10" required name="maxTickets">
         </div>
         <c:choose>
             <c:when test="${event == null}">
@@ -102,7 +103,7 @@
             <c:otherwise>
                 <div>
                     <button type="submit" class="btn btn-warning">Edit</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button onclick="setActionThenDelete()" type="button" class="btn btn-danger">Delete</button>
                 </div>
             </c:otherwise>
         </c:choose>
@@ -111,5 +112,9 @@
     <a href="dashboard">List events</a>
 </body>
 <script>
+    function setActionThenDelete(){
+        $("#formAction").val("delete")
+        $("#eventForm").submit()
+    }
 </script>
 </html>

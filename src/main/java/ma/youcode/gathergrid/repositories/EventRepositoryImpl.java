@@ -37,7 +37,7 @@ public class EventRepositoryImpl implements EventRepository{
 
     @Override
     public void delete(Event event) {
-        em.remove(event);
+        em.remove(em.contains(event) ? event : em.merge(event));
     }
 
     @Override

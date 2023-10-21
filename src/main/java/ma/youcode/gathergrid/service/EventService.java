@@ -24,6 +24,13 @@ public class EventService {
     public EventService() {
     }
 
+
+    public boolean eventIsExist(long id) {
+        Optional<Event> optionalEvent = getEventById(id);
+        if (optionalEvent.isPresent()) return true;
+        return false;
+    }
+
     public Response<Event> createEvent(Event event){
         Response<Event> eventResponse = new Response<>();
         validate(event);
@@ -58,6 +65,7 @@ public class EventService {
         return Optional.ofNullable(eventRepository.findById(eventId));
     }
 
+
     public Response<Event> updateEvent(Event event) {
         Response<Event> eventResponse = new Response<>();
         Optional<Event> optionalEvent =  getEventById(event.getId());
@@ -69,6 +77,14 @@ public class EventService {
                 eventResponse.setResult(event);
             }
         }
+        return eventResponse;
+    }
+    public Response<Event> deleteEvent(Event event){
+        Response<Event> eventResponse = new Response<>();
+        if(eventIsExist(event.getId())){
+            eventRepository.delete(event);
+            eventResponse.setResult(event);
+        }else eventResponse.setError(List.of(new Error("Invalid Event")));
         return eventResponse;
     }
 }

@@ -63,8 +63,8 @@
                         <td data-label="last-name">${events.hour}</td>
                         <td data-label="last-name">
                             <form action="event" method="post">
-                                <input type="text" name="action" readonly value="edit">
-                                <input type="text" name="id" readonly value="${events.id}">
+                                <input type="text" hidden="hidden" name="action" readonly value="edit">
+                                <input type="text" hidden="hidden" name="id" readonly value="${events.id}">
                                 <button class="btn btn-warning" >Edit</button>
                             </form>
                         </td>
