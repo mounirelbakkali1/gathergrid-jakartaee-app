@@ -11,4 +11,6 @@ public interface EventRepository {
     public void update(Event event);
     public void delete(Event event);
     public List<Event> findAll();
+
+    Optional<Event> findEventByName(String eventName);
 }

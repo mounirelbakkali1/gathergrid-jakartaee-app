@@ -7,6 +7,7 @@ import jakarta.enterprise.inject.Model;
 import jakarta.enterprise.inject.Produces;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.PersistenceContextType;
 
 
 @Model
@@ -14,7 +15,7 @@ public class EntityManagerProducer  {
 
     private EntityManager em;
 
-    @PersistenceContext(unitName = "primary")
+    @PersistenceContext(unitName = "primary",type = PersistenceContextType.EXTENDED)
     public void setEntityManager(EntityManager em) {
         this.em = em;
     }

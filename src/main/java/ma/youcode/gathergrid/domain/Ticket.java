@@ -3,12 +3,15 @@ package ma.youcode.gathergrid.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
+
 @Entity
 @Table(name = "tickets")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 public class Ticket {
 
     @Id
@@ -26,5 +29,9 @@ public class Ticket {
     @ManyToOne
     private Event event;
 
+    @ManyToOne
+    private User user;
 
+    @Column(name = "reservation_date", columnDefinition = "DATE DEFAULT CURRENT_DATE")
+    private Date reservationDate;
 }

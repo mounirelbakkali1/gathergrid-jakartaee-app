@@ -2,10 +2,11 @@ package ma.youcode.gathergrid.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ma.youcode.gathergrid.utils.Response;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "events")
@@ -38,6 +39,9 @@ public class Event {
     @ManyToOne
     private Organization organization;
 
+    @OneToMany
+    private List<Ticket> tickets=new ArrayList<>();
+
     @Column(name = "available_tickets")
     private int numberOfTicketsAvailable;
 
@@ -57,5 +61,14 @@ public class Event {
                 ", category=" + category.getName() +
                 ", organiser=" + organization.getName() +
                 '}';
+    }
+
+
+    public void addTicket(Ticket ticket){
+        this.tickets.add(ticket);
+        ticket.setEvent(this);
+    }
+    public int getNumberOfTicketsAvailable(){
+        return 10;
     }
 }
