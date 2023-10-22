@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class TicketDto {
+    private Long id;
     private float price;
     private int quantity;
     private String ticketType;

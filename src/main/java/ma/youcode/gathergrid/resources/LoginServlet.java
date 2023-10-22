@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
         System.out.println(String.format("trying to login with %s %s",username,password));
         Credential credential = new UsernamePasswordCredential(username,new Password(password));
         AuthenticationStatus status = securityContext.authenticate(request,response, AuthenticationParameters.withParams().credential(credential));
+        System.out.println("------------"+status);
         if(status.equals(AuthenticationStatus.SEND_FAILURE)){
             response.sendRedirect("login?error=failed");
         }else if(status.equals(AuthenticationStatus.SUCCESS)){

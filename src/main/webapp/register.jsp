@@ -85,7 +85,7 @@
 <script>
         function checkIfValidOrg(){
             var value = document.getElementById("organization").value;
-            $.get("http://localhost:8080/GatherGrid-1.0-SNAPSHOT/api/organizations/"+value,function (data,status){
+            $.get("${pageContext.request.contextPath}/api/organizations/"+value,function (data,status){
                 if(status === "success"){
                     if(data.result!=null) {
                         $("#organizationError").text("Organization already exists");

@@ -75,7 +75,7 @@
 <script>
     function deleteOrganization(id) {
         $.ajax({
-            url: "http://localhost:8080/GatherGrid-1.0-SNAPSHOT/api/organizations/" + id,
+            url: "${pageContext.request.contextPath}/api/organizations/" + id,
             type: 'DELETE',
             success: function(data,status) {
                 console.log(status)

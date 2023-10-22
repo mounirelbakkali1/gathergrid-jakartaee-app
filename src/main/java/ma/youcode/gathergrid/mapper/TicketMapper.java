@@ -14,6 +14,7 @@ public class TicketMapper {
 
     public TicketDto toDto(Ticket ticket) {
         return TicketDto.builder()
+                .id(ticket.getId())
                 .price(ticket.getPrice())
                 .quantity(ticket.getQuantity())
                 .ticketType(ticket.getTicketType().name())

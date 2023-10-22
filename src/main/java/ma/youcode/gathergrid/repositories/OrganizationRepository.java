@@ -31,25 +31,21 @@ public class OrganizationRepository {
         return Optional.of(em.find(Organization.class,id));
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
     public Organization saveOrganization(Organization organization){
         em.persist(organization);
         return organization;
     }
-    @Transactional(Transactional.TxType.REQUIRED)
     public Organization updateOrganization(Organization organization){
         em.merge(organization);
         return organization;
     }
-    @Transactional(Transactional.TxType.REQUIRED)
-    public void deleteOrganization(Long Id){
-        em.remove(em.find(Organization.class,Id));
-        em.flush();
-        em.clear();
+    public void deleteOrganization(Organization organization){
+        em.merge(organization);
+        em.remove(organization);
     }
 
     public Optional<Organization> findOrganizationByName(String name){
-        return em.createQuery("select o from Organization o where o.name = :name",Organization.class)
+        return em.createQuery("select o from Organization o where lower(o.name) = :name",Organization.class)
                     .setParameter("name",name)
                     .getResultStream().findAny();
     }

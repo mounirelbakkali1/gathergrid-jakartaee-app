@@ -2,6 +2,7 @@ package ma.youcode.gathergrid.service;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import ma.youcode.gathergrid.domain.Organization;
@@ -12,6 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RequestScoped
+@Transactional
 public class OrganizationService implements IOrganizationService {
 
     private  OrganizationRepository organizationRepository;
@@ -47,7 +49,8 @@ public class OrganizationService implements IOrganizationService {
 
     @Override
     public void deleteOrganization(Long id) {
-        organizationRepository.deleteOrganization(id);
+        Organization organization = organizationRepository.findOrganizationById(id).orElseThrow();
+        organizationRepository.deleteOrganization(organization);
     }
 
     public List<Organization> getAllOrganizationsByUser(Long id) {

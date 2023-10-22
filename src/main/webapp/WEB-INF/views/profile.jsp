@@ -170,6 +170,7 @@
                 <th scope="col">Price</th>
                 <th scope="col">Type</th>
                 <th scope="col">Took</th>
+                <th scope="col">Action</th>
             </tr>
             </thead>
             <tbody>
@@ -180,23 +181,52 @@
                     </tr>
                 </c:when>
                 <c:otherwise>
+                    <c:set var="date" value="<%= java.time.LocalDateTime.now() %>" scope="request" />
+                    <jsp:useBean id="date" scope="request" type="java.time.LocalDateTime"/>
                     <c:forEach items="${tickets}" var="reservation">
                         <tr>
                             <td>${reservation.eventName}</td>
                             <td>${reservation.eventDate}</td>
                             <td>${reservation.quantity}</td>
-                            <td>${reservation.price}</td>
-                            <td>${reservation.ticketType}</td>
+                            <td>${reservation.price}$</td>
+                            <td>
+                                <span class="badge bg-${reservation.ticketType=='VIP' ? 'info' : (reservation.ticketType=='STUDENT' ? 'primary' : 'warning ')}">${reservation.ticketType}</span>
+                            </td>
                             <td>${reservation.reservationDate}</td>
+                            <c:choose>
+                                <c:when test="${date.isBefore(reservation.eventDate)}">
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" onclick="cancelReservation(${reservation.id})">cancel</button>
+                                    </td>
+                                </c:when>
+                                <c:otherwise>
+                                    <td>------</td>
+                                </c:otherwise>
+                            </c:choose>
                         </tr>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
             </tbody>
         </table>
-    </div>
 </div>
 
 </body>
 <jsp:include page="../../components/js-scripts.jsp"></jsp:include>
+<script>
+    function cancelReservation(tiketId) {
+        if(window.confirm("Are you sure you want to cancel this reservation ?")){
+               $.ajax({
+                   url: '${pageContext.request.contextPath}/reservations?ticketId='+tiketId,
+                   type: 'POST',
+                   success: function(data,status) {
+                       console.log(data,status);
+                       if (status === "success") {
+                           window.location.reload();
+                       }
+                   }
+               });
+       }
+    }
+</script>
 </html>

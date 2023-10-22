@@ -3,6 +3,7 @@ package ma.youcode.gathergrid.repositories;
 import ma.youcode.gathergrid.domain.Ticket;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TicketRepository {
     public void save(Ticket ticket);
@@ -14,4 +15,5 @@ public interface TicketRepository {
     public List<Ticket> findByTicketsType(String ticketType);
     public List<Ticket> findAll();
 
+    Optional<Ticket> findById(Long ticketId);
 }
