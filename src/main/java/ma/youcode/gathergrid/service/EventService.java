@@ -6,6 +6,7 @@ import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.repositories.EventRepository;
 import ma.youcode.gathergrid.utils.Response;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,13 @@ public class EventService {
     public EventService() {
     }
 
+
+    public boolean eventIsExist(long id) {
+        Optional<Event> optionalEvent = getEventById(id);
+        if (optionalEvent.isPresent()) return true;
+        return false;
+    }
+
     public Response<Event> createEvent(Event event){
         Response<Event> eventResponse = new Response<>();
         validate(event);
@@ -33,6 +41,8 @@ public class EventService {
         }
         return eventResponse;
     }
+
+
     public void validate(Event event){
         if( event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty()){
             this.errors.add(new Error("All Fields are required"));
@@ -53,5 +63,29 @@ public class EventService {
 
     public Optional<Event> getEventById(Long eventId) {
         return Optional.ofNullable(eventRepository.findById(eventId));
+    }
+
+
+    public Response<Event> updateEvent(Event event) {
+        Response<Event> eventResponse = new Response<>();
+        Optional<Event> optionalEvent =  getEventById(event.getId());
+        if(optionalEvent.isPresent()){
+            validate(event);
+            if(!this.errors.isEmpty()) eventResponse.setError(this.errors);
+            else {
+                eventRepository.update(event);
+                eventResponse.setResult(event);
+            }
+        }
+        return eventResponse;
+    }
+    public Response<Event> deleteEvent(long id){
+        Response<Event> eventResponse = new Response<>();
+        if(eventIsExist(id)){
+            Event event = eventRepository.findById(id);
+            eventRepository.delete(event);
+            eventResponse.setResult(event);
+        }else eventResponse.setError(List.of(new Error("Invalid Event")));
+        return eventResponse;
     }
 }
