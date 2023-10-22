@@ -12,23 +12,9 @@
 <body>
 
 <style>
-    .navbar-brand{
-        margin-left:13vw;
 
-    }
-    .navbar-collapse{
-        margin-left:17vw;
 
-    }
-    .navbar-collapse a {
-        font-size: 15px;
-    }
 
-    .actions-section{
-        margin-right:13vw;
-        margin-left: 10vw;
-
-    }
     .home-text{
         /* margin-left: 13vw; */
     }

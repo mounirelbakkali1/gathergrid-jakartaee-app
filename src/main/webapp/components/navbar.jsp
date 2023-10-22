@@ -11,10 +11,28 @@
     <title>Title</title>
 </head>
 <body>
+<style>
+  .navbar-brand{
+    margin-left:13vw;
+
+  }
+  .navbar-collapse{
+    margin-left:17vw;
+
+  }
+  .navbar-collapse a {
+    font-size: 15px;
+  }
+  .actions-section{
+    margin-right:13vw;
+    margin-left: 10vw;
+
+  }
+</style>
 <nav class="navbar navbar-expand-lg mt-2">
 
   <div class="container-fluid">
-    <a class="navbar-brand fw-bolder" href="#">GatherGrid</a>
+    <a class="navbar-brand" href="/gg">GatherGrid</a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -27,7 +45,7 @@
           <a class="nav-link active" aria-current="page" href="#">HOME</a>
         </li>
         <li class="nav-item mx-4">
-          <a class="nav-link" href="#">EVENTS</a>
+          <a class="nav-link" href="/gg/events">EVENTS</a>
         </li>
         <li class="nav-item mx-4">
           <a class="nav-link" href="#">ABOUT</a>
