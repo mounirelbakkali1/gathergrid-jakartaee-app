@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ma.youcode.gathergrid.domain.Organization;
+import ma.youcode.gathergrid.service.CategoryService;
 import ma.youcode.gathergrid.service.EventService;
 import ma.youcode.gathergrid.service.OrganizationService;
 import ma.youcode.gathergrid.service.UserService;
@@ -24,13 +25,15 @@ public class DashboardServlet extends HttpServlet {
     private EventService eventService;
     private OrganizationService organizationService;
     private SecurityContext securityContext;
-   private UserService userService;
+    private UserService userService;
+    private CategoryService categoryService;
     @Inject
-    public DashboardServlet(EventService eventService, OrganizationService organizationService, SecurityContext securityContext, UserService userService) {
+    public DashboardServlet(EventService eventService, OrganizationService organizationService, SecurityContext securityContext, UserService userService, CategoryService categoryService) {
         this.eventService = eventService;
         this.organizationService = organizationService;
         this.securityContext = securityContext;
         this.userService = userService;
+        this.categoryService = categoryService;
     }
 
     @Override
@@ -43,6 +46,10 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("events",eventService.getAllEvents().getResult());
+
+        req.setAttribute("categories",categoryService
+                .getAllCategories()
+                .getResult());
         List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(this.userId);
         req.setAttribute("organizations", allOrganizationsByUser);
         req.getRequestDispatcher("/WEB-INF/dashboard.jsp").forward(req, resp);

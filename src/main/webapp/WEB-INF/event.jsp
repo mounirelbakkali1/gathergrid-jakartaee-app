@@ -1,4 +1,4 @@
-<%--
+<%@ page import="ma.youcode.gathergrid.domain.Event" %><%--
   Created by IntelliJ IDEA.
   User: Youcode
   Date: 18/10/2023
@@ -11,8 +11,11 @@
 <head>
     <title>Creating Events</title>
     <jsp:include page="../components/head.jsp" />
+    <jsp:include page="../components/my-events.jsp" />
 </head>
 <body>
+
+    <div>
     <h1>Create Events</h1>
     <div>
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -38,38 +41,48 @@
                 <div class="alert alert-success d-flex align-items-center" role="alert">
                     <svg class="bi flex-shrink-0 me-2" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"></use></svg>
                     <div>
-                        Event has been added successfully
+                        Event has been affected successfully
                     </div>
                 </div>
             </c:when>
         </c:choose>
     </div>
-    <form action="event" method="${event != null ? 'put' : 'post'}">
+    <form id="eventForm" action="event" method="post">
+        <input id="formAction" hidden="hidden" name="action" value="${event == null ? "post" : "put"}" />
+        <input name="id" hidden="hidden" value="${event.id}" />
         <div class="form-group">
             <label for="Name">Name:</label>
-            <input type="text" class="form-control" id="Name" name="name" required>
+            <input value="${event.name}" type="text" class="form-control" id="Name" name="name" placeholder="Event Name" required>
         </div>
         <div class="form-group">
             <label for="description">Description:</label>
-            <input type="text" class="form-control" id="description" name="description" required>
+            <input value="${event.description}" type="text" class="form-control" id="description" name="description"  placeholder="Event Description"  required>
         </div>
         <div class="form-group">
             <label for="location">Location:</label>
-            <input type="text" class="form-control" id="location" name="location" required>
+            <input value="${event.location}" type="text" class="form-control" id="location" name="location" placeholder="Event Location" required>
         </div>
+        <%
+            Event event = (Event) request.getAttribute("event");
+            String _time = "00:00";
+            if(event != null){
+                _time = event.getHour().toLocalTime().toString();
+            }
+
+        %>
         <div class="form-group">
             <label for="time">Time:</label>
-            <input type="time" class="form-control" id="time" name="time" required>
+            <input value="<%= _time %>" type="time" class="form-control" id="time" name="time" required>
         </div>
         <div class="form-group">
             <label for="date">Date:</label>
-            <input type="date" class="form-control" id="date" name="date" required>
+            <input value="${event.date}" type="date" class="form-control" id="date" name="date" required>
         </div>
         <div class="form-group">
             <label>Category:</label>
             <select class="form-control" name="category">
-                <c:forEach items="${categories}" var="categories">
-                    <option value="${categories.id}">${categories.name}</option>
+                <c:forEach items="${categories}" var="category">
+                    <option ${event.category.id == category.id ? 'selected' : ''} value="${category.id}">${category.name}</option>
                 </c:forEach>
             </select>
         </div>
@@ -77,13 +90,13 @@
             <label>Your Beloved Organizations:</label>
             <select class="form-control" name="organization">
                 <c:forEach items="${organizations}" var="organization">
-                    <option value="${organization.id}" ${organization.id == 1 ? 'selected' : '' } >${organization.name}</option>
+                    <option value="${organization.id}" ${event.organization.id == organization.id ? 'selected' : ''} >${organization.name}</option>
                 </c:forEach>
             </select>
         </div>
         <div class="form-group">
             <label>Available Places:</label>
-            <input type="number" min="10" name="maxTickets">
+            <input class="form-control" type="number" min="10" value="10" required name="maxTickets">
         </div>
         <c:choose>
             <c:when test="${event == null}">
@@ -92,14 +105,23 @@
             <c:otherwise>
                 <div>
                     <button type="submit" class="btn btn-warning">Edit</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button onclick="setActionThenDelete()" type="button" class="btn btn-danger">Delete</button>
                 </div>
             </c:otherwise>
         </c:choose>
     </form>
     <br>
     <a href="dashboard">List events</a>
+    </div>
 </body>
 <script>
+    function setActionThenDelete(){
+        //$("#formAction").val("delete")
+        //$("#eventForm").submit()
+    }
+    function prepareModal(name){
+        console.log(name)
+        $("#addEmployeeModal #modalName").val(name);
+    }
 </script>
 </html>
