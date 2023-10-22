@@ -1,6 +1,7 @@
 package ma.youcode.gathergrid.repositories;
 
 import ma.youcode.gathergrid.domain.Category;
+import ma.youcode.gathergrid.utils.Response;
 
 import java.util.List;
 

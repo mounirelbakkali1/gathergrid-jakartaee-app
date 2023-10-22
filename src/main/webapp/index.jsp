@@ -57,7 +57,7 @@
             <h1 class="mb-5  fw-bold">EventVibe</h1>
             <p class="w-75">Your One-Stop Destination for Reserving Memorable Experiences</p>
             <div class="mt-5">
-                <a href="" class="btn find-btn">Find Your Event</a>
+                <a href="events" class="btn find-btn">Find Your Event</a>
                 <a href="" class="btn create-btn">Create Your Event</a>
             </div>
         </div>

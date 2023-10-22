@@ -1,16 +1,19 @@
 package ma.youcode.gathergrid.repositories;
 
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import lombok.NoArgsConstructor;
+import ma.youcode.gathergrid.config.MyQualifier;
 import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Ticket;
 
 import java.util.List;
+import java.util.Optional;
 
-@Model
-@NoArgsConstructor
+@RequestScoped
+@MyQualifier
 public class TicketRepositoryImpl implements TicketRepository{
     private EntityManager em ;
     @Inject
@@ -25,6 +28,7 @@ public class TicketRepositoryImpl implements TicketRepository{
 
     @Override
     public void cancel(Ticket ticket) {
+        em.merge(ticket);
         em.remove(ticket);
     }
 
@@ -67,5 +71,10 @@ public class TicketRepositoryImpl implements TicketRepository{
     public List<Ticket> findAll() {
         return em.createQuery("select t from Ticket t", Ticket.class)
                 .getResultList();
+    }
+
+    @Override
+    public Optional<Ticket> findById(Long ticketId) {
+        return Optional.ofNullable(em.find(Ticket.class, ticketId));
     }
 }

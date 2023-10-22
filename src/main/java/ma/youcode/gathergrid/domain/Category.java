@@ -8,7 +8,6 @@ import lombok.*;
 @Setter
 @Table(name = "categories")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Category {
@@ -23,5 +22,8 @@ public class Category {
     public Category(String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    public Category() {
     }
 }

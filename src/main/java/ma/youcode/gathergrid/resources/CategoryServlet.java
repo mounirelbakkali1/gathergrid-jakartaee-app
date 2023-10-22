@@ -9,8 +9,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ma.youcode.gathergrid.domain.Category;
 import ma.youcode.gathergrid.service.CategoryService;
+import ma.youcode.gathergrid.utils.Response;
 
 import java.io.IOException;
+import java.util.List;
+
 @WebServlet(name = "CategoryServlet", value = "/category")
 public class CategoryServlet extends HttpServlet {
 
@@ -19,8 +22,9 @@ public class CategoryServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/categories.jsp");
-        dispatcher.forward(req, resp);
+
+        req.setAttribute("categories", categoryService.getAllCategories().getResult());
+        req.getRequestDispatcher("/WEB-INF/categories.jsp").forward(req, resp);
 
     }
 
@@ -30,5 +34,13 @@ public class CategoryServlet extends HttpServlet {
         String description = req.getParameter("description");
         categoryService.createCategory(new Category(name , description));
        resp.sendRedirect(req.getContextPath()+"/dashboard");
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = req.getParameter("id");
+        categoryService.deleteCategory(Long.valueOf(id));
+        resp.sendRedirect(req.getContextPath()+"/category");
+
     }
 }

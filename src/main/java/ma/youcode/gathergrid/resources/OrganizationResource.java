@@ -1,6 +1,7 @@
 package ma.youcode.gathergrid.resources;
 
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Path("organizations")
 @NoArgsConstructor
+@Transactional
 public class OrganizationResource {
 
     private IOrganizationService organizationService;
@@ -32,7 +34,7 @@ public class OrganizationResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response<OrganizationDto> getOrganizationByName(@PathParam("name") String name){
         Response<OrganizationDto> response = new Response<>();
-        Optional<Organization> organizationByName = organizationService.findOrganizationByName(name);
+        Optional<Organization> organizationByName = organizationService.findOrganizationByName(name.toLowerCase());
         organizationByName.ifPresent(organization -> response.setResult(orgDtoMapper.toDto(organization)));
         return response;
     }

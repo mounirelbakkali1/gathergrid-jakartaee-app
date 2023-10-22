@@ -8,6 +8,7 @@ import ma.youcode.gathergrid.utils.Response;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RequestScoped
 public class CategoryService {
@@ -43,11 +44,20 @@ public class CategoryService {
         return categoryResponse;
     }
 
-    public Response<Category> getCategoryById(long id){
+    public Optional<Category> getCategoryById(long id){
+        return Optional.ofNullable(categoryRepository.findById(id));
+    }
+
+    public Response<Category> deleteCategory(long id){
         Response<Category> categoryResponse = new Response<Category>();
-        Category category = categoryRepository.findById(id);
-        categoryResponse.setResult(category);
+        Optional<Category> optionalCategory = getCategoryById(id);
+        if (optionalCategory.isPresent()){
+            categoryRepository.delete(optionalCategory.get());
+        }else {
+            categoryResponse.setError(List.of(new Error("No Category Found")));
+        }
         return categoryResponse ;
     }
+
 
 }

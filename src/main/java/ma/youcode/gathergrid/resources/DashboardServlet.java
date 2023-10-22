@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet(name = "dashboard", value = "/dashboard")
-@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN","USER"}))
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN","USER"},value = ServletSecurity.EmptyRoleSemantic.PERMIT))
 public class DashboardServlet extends HttpServlet {
     private Long userId;
     private EventService eventService;

@@ -54,6 +54,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Transactional
     public void update(User user) {
         em.merge(user);
+        em.flush();
+        em.clear();
     }
 
     @Override
