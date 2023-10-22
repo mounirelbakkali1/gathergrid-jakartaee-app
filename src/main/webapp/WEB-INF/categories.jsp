@@ -42,8 +42,8 @@
             <td>${category.name}</td>
             <td>${category.description}</td>
             <td>
-                <a href="/yourapp/category?action=edit&id=${category.id}">Edit</a> |
-                <a href="/yourapp/category?action=delete&id=${category.id}">Delete</a>
+                <a href="/gg/category?action=edit&id=${category.id}">Edit</a> |
+                <a href="/gg/category?action=delete&id=${category.id}">Delete</a>
             </td>
         </tr>
     </c:forEach>
@@ -51,4 +51,8 @@
 </table>
 
 </body>
+
+<script>
+
+</script>
 </html>
