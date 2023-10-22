@@ -43,7 +43,7 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h2>Manage <b>Employees</b></h2>
+                                <h2>Manage <b>Events</b></h2>
                             </div>
                             <div class="col-sm-6">
                                 <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
@@ -171,7 +171,7 @@
                     </div>
                     <div class="modal-body">
                         <input hidden="hidden" name="action" value="put" />
-                        <input name="id" class="id" />
+                        <input hidden="hidden" name="id" class="id" />
                         <div class="form-group">
                             <label >Name:</label>
                             <input  type="text" class="form-control name"  name="name" placeholder="Event Name" required>
@@ -232,7 +232,7 @@
                     </div>
                     <div class="modal-body">
                         <input hidden="hidden" name="action" value="delete" />
-                        <input class="id" name="id" />
+                        <input hidden="hidden" class="id" name="id" />
                         <p>Are you sure you want to delete these Records ?</p>
                         <p class="text-warning"><small>This action cannot be undone.</small></p>
                     </div>
@@ -242,49 +242,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
-
-    <div>
-        <div class="d-flex justify-content-between">
-            <h4>List of your events</h4>
-            <a href="event">Create Event</a>
-        </div>
-        <div class="container">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Location</th>
-                    <th>Organization</th>
-                    <th>Date</th>
-                    <th>Hour</th>
-                    <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach items="${events}" var="events">
-                    <tr>
-                        <td data-label="first-name">${events.name}</td>
-                        <td data-label="last-name">${events.description}</td>
-                        <td data-label="last-name">${events.category.name}</td>
-                        <td data-label="first-name">${events.location}</td>
-                        <td data-label="last-name">${events.organization.name}</td>
-                        <td data-label="first-name">${events.date}</td>
-                        <td data-label="last-name">${events.hour}</td>
-                        <td data-label="last-name">
-                            <form action="event" method="post">
-                                <input type="text" hidden="hidden" name="action" readonly value="edit">
-                                <input type="text" hidden="hidden" name="id" readonly value="${events.id}">
-                                <button class="btn btn-warning" >Edit</button>
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
         </div>
     </div>
 </body>
