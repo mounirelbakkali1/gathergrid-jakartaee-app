@@ -156,14 +156,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Available Places:</label>
-                            <input class="form-control available-place" type="number" min="10" value="10" required name="maxTickets">
-                        </div>
-                        <div class="form-group">
                             <label>Ticket Packs:</label>
                             <c:forEach items="${ticketTypes}" var="type">
                                 <div class="form-group d-flex justify-content-between align-items-center gap-2 ticket-packs">
-                                    <input id="${type}-checkbox" onclick="ticketCheckBoxClicked(this,'${type}-price')" type="checkbox">
+                                    <input id="${type}-checkbox" onclick="ticketCheckBoxClicked(this,'${type}-price','${type}-available-places')" type="checkbox">
+                                    <input id="${type}-available-places" placeholder="${type} Available Place" name="${fn:toLowerCase(type)}-available-places" class="form-control" type="number" min="0" disabled>
                                     <input id="${type}-price" placeholder="${type} Ticket Price" name="${fn:toLowerCase(type)}-ticket-price" class="form-control" type="number" min="0" disabled>
                                 </div>
                             </c:forEach>
@@ -298,17 +295,19 @@
     function perpareToDelete(eventId){
         $('.delete-form .id').val(eventId)
     }
-    function ticketCheckBoxClicked(checkbox,inputId){
+    function ticketCheckBoxClicked(checkbox,priceInputId,availablePlacesInputId){
         var checkedCheckboxes = $(' .ticket-packs input[type="checkbox"]:checked');
         if(checkedCheckboxes.length !== 0){
             if ($(checkbox).is(':checked')) {
-                $('#' + inputId).prop('disabled', false);
+                $('#' + priceInputId).prop('disabled', false);
+                $('#' + availablePlacesInputId).prop('disabled', false);
             } else {
-                $('#' + inputId).prop('disabled', true).val('');
+                $('#' + priceInputId).prop('disabled', true).val('');
+                $('#' + availablePlacesInputId).prop('disabled', true).val('');
             }
         }else{
             alert("There must be at least one ticket type: ");
-            $(checkbox).attr('checked',true);
+            checkbox.setAttribute('checked')
         }
     }
 </script>
