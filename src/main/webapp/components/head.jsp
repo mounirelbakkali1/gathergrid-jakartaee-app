@@ -16,6 +16,7 @@
     }
     .event .table-wrapper {
         background: #fff;
+        color: #0e1c36;
         padding: 20px 25px;
         border-radius: 3px;
         min-width: 1000px;
@@ -23,8 +24,6 @@
     }
     .event .table-title {
         padding-bottom: 15px;
-        background: #435d7d;
-        color: #fff;
         padding: 16px 30px;
         min-width: 100%;
         margin: -20px -25px 10px;
