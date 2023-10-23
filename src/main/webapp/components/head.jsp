@@ -11,13 +11,6 @@
     *{
         font-family: 'Poppins', sans-serif;
     }
-
-    body {
-        color: #566787;
-        background: #f5f5f5;
-        font-family: 'Varela Round', sans-serif;
-        font-size: 13px;
-    }
     .event .table-responsive {
         margin: 30px 0;
     }
@@ -152,57 +145,7 @@
         margin-top: 10px;
         font-size: 13px;
     }
-    /* Custom checkbox */
-    .event .custom-checkbox {
-        position: relative;
-    }
-    .event .custom-checkbox input[type="checkbox"] {
-        opacity: 0;
-        position: absolute;
-        margin: 5px 0 0 3px;
-        z-index: 9;
-    }
-    .event .custom-checkbox label:before{
-        width: 18px;
-        height: 18px;
-    }
-    .event .custom-checkbox label:before {
-        content: '';
-        margin-right: 10px;
-        display: inline-block;
-        vertical-align: text-top;
-        background: white;
-        border: 1px solid #bbb;
-        border-radius: 2px;
-        box-sizing: border-box;
-        z-index: 2;
-    }
-    .event .custom-checkbox input[type="checkbox"]:checked + label:after {
-        content: '';
-        position: absolute;
-        left: 6px;
-        top: 3px;
-        width: 6px;
-        height: 11px;
-        border: solid #000;
-        border-width: 0 3px 3px 0;
-        transform: inherit;
-        z-index: 3;
-        transform: rotateZ(45deg);
-    }
-    .event .custom-checkbox input[type="checkbox"]:checked + label:before {
-        border-color: #03A9F4;
-        background: #03A9F4;
-    }
-    .event .custom-checkbox input[type="checkbox"]:checked + label:after {
-        border-color: #fff;
-    }
-    .event .custom-checkbox input[type="checkbox"]:disabled + label:before {
-        color: #b8b8b8;
-        cursor: auto;
-        box-shadow: none;
-        background: #ddd;
-    }
+
     /* Modal styles */
     .modal .modal-dialog {
         max-width: 400px;
