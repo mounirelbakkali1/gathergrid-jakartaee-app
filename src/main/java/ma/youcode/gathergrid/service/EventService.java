@@ -2,9 +2,11 @@ package ma.youcode.gathergrid.service;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.repositories.EventRepository;
 import ma.youcode.gathergrid.utils.Response;
+import org.hibernate.annotations.Cache;
 
 import javax.swing.text.html.Option;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequestScoped
+@Transactional
 public class EventService {
     private EventRepository eventRepository;
 
