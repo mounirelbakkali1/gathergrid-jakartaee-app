@@ -10,9 +10,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ma.youcode.gathergrid.domain.Comment;
 import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.domain.TicketType;
 import ma.youcode.gathergrid.domain.User;
+import ma.youcode.gathergrid.service.CommentService;
 import ma.youcode.gathergrid.service.EventService;
 import ma.youcode.gathergrid.service.TicketService;
 import ma.youcode.gathergrid.service.UserService;
@@ -27,13 +29,14 @@ public class ShowEventServlet extends HttpServlet {
     private User user;
     private Event currentEvent;
     private EventService eventService;
+    private CommentService commentService;
     private TicketService ticketService;
     private UserService userService;
     private SecurityContext securityContext;
-
     @Inject
-    public ShowEventServlet(EventService eventService, TicketService ticketService, UserService userService, SecurityContext securityContext) {
+    public ShowEventServlet( EventService eventService, CommentService commentService, TicketService ticketService, UserService userService, SecurityContext securityContext) {
         this.eventService = eventService;
+        this.commentService = commentService;
         this.ticketService = ticketService;
         this.userService = userService;
         this.securityContext = securityContext;
@@ -48,6 +51,8 @@ public class ShowEventServlet extends HttpServlet {
             resp.sendError(404,"Event not found");
         }else{
             currentEvent = eventById.get();
+            List<Comment> result = commentService.findCommentByEventId(eventId).getResult();
+            req.setAttribute("comments",result);
             req.setAttribute("event",currentEvent);
             // ticket type array from enum
             req.setAttribute("ticketTypes", List.of(TicketType.values()));
