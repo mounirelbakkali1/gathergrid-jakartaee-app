@@ -414,7 +414,7 @@
                                     <td >${event.hour}</td>
                                     <td>
                                         <a href="#editEmployeeModal"
-                                           onclick="prepareForModal(${event.id},'${event.name}','${event.description}','${event.category.id}','${event.location}','${event.organization.id}','${event.date}','${event.hour}'${event.ticketPacks})"
+                                           onclick="prepareForModal(${event.id},'${event.name}','${event.description}','${event.category.id}','${event.location}','${event.organization.id}','${event.date}','${event.hour}')"
                                            class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
                                         <a href="#deleteEmployeeModal" onclick="perpareToDelete(${event.id})" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
                                     </td>
@@ -652,7 +652,7 @@
             }
         });
     }
-    function prepareForModal(id,name,description,categoryId,location,organizationId,date,hour,ticketPacks){
+    function prepareForModal(id,name,description,categoryId,location,organizationId,date,hour){
         $('.edit-form .id').val(id)
         $('.edit-form .name').val(name)
         $('.edit-form .description').val(description)
@@ -668,7 +668,7 @@
         $('.delete-form .id').val(eventId)
     }
     function ticketCheckBoxClicked(checkbox,priceInputId,availablePlacesInputId){
-        var checkedCheckboxes = $(' .ticket-packs input[type="checkbox"]:checked');
+        let checkedCheckboxes = $(' .ticket-packs input[type="checkbox"]:checked');
         if(checkedCheckboxes.length !== 0){
             if ($(checkbox).is(':checked')) {
                 $('#' + priceInputId).prop('disabled', false);

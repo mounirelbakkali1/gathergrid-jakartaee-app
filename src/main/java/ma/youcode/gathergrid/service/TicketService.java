@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import ma.youcode.gathergrid.config.MyQualifier;
 import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.domain.Ticket;
+import ma.youcode.gathergrid.domain.TicketPack;
 import ma.youcode.gathergrid.dto.TicketDto;
 import ma.youcode.gathergrid.mapper.TicketMapper;
 import ma.youcode.gathergrid.repositories.TicketRepository;
@@ -34,6 +35,13 @@ public class TicketService  {
 
 
     public Response<TicketDto> save(Ticket ticket) {
+        // TODO : check if the user is not the event creator !!!!!!
+        if (ticket.getEvent().getOrganization().getUser().getUsername().equals(ticket.getUser().getUsername())){
+            return Response
+                    .<TicketDto>builder()
+                    .error(List.of(new Error("Can't reserve a ticket for your own event")))
+                    .build();
+        }
         // TODO :  check if the event exists
         if (ticket.getEvent()==null){
             return Response
@@ -42,13 +50,17 @@ public class TicketService  {
                     .build();
         }
         // TODO : check if the quantity is available in the event
-        if(ticket.getQuantity() > ticket.getEvent().getNumberOfTicketsAvailable()){
+        TicketPack pack = ticket.getEvent().getTicketPacks()
+                .stream()
+                .filter(ticketPack -> ticketPack.getTicketType().equals(ticket.getTicketType()))
+                .findFirst()
+                .get();
+        if(pack.getQuantity() <= 0){
             return Response
                     .<TicketDto>builder()
-                    .error(List.of(new Error("Not enough tickets available")))
+                    .error(List.of(new Error("Not enough tickets available for this type")))
                     .build();
         }
-        // TODO : check if the required ticket type is available in the event
         // TODO : check if the date is valid
         if (canBuyOrCancel(ticket, ticket.getEvent().getDate())){
             return Response
@@ -56,7 +68,11 @@ public class TicketService  {
                     .error(List.of(new Error("Can't reserve a ticket after the event date")))
                     .build();
         }
+        // TODO : set the price of the ticket corresponding to the ticket type
+        ticket.setPrice(pack.getPrice());
+        ticket.setQuantity(1);
         ticketRepository.save(ticket);
+        eventService.updateQuantityOfTicket(ticket.getEvent(),ticket.getTicketType(),false);
         return Response
                 .<TicketDto>builder()
                 .result(ticketMapper.toDto(ticket))
@@ -67,6 +83,7 @@ public class TicketService  {
         // TODO : can cancel
         if(canBuyOrCancel(ticket, ticket.getReservationDate())){
             ticketRepository.cancel(ticket);
+            eventService.updateQuantityOfTicket(ticket.getEvent(),ticket.getTicketType(),true);
             return Response
                     .<TicketDto>builder()
                     .result(ticketMapper.toDto(ticket))
