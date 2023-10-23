@@ -12,6 +12,7 @@
         <class>ma.youcode.gathergrid.domain.Organization</class>
         <class>ma.youcode.gathergrid.domain.Ticket</class>
         <class>ma.youcode.gathergrid.domain.Comment</class>
+        <class>ma.youcode.gathergrid.domain.TicketPack</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/gatherGrid?createDatabaseIfNotExist=true;autoReconnect=true;useSSL=false"/>

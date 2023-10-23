@@ -12,10 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ma.youcode.gathergrid.domain.Category;
-import ma.youcode.gathergrid.domain.Event;
-import ma.youcode.gathergrid.domain.Organization;
-import ma.youcode.gathergrid.domain.User;
+import ma.youcode.gathergrid.domain.*;
 import ma.youcode.gathergrid.service.CategoryService;
 import ma.youcode.gathergrid.service.EventService;
 import ma.youcode.gathergrid.service.OrganizationService;
@@ -24,6 +21,7 @@ import ma.youcode.gathergrid.utils.Response;
 
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -41,30 +39,37 @@ public class EventServlet extends HttpServlet {
     private OrganizationService organizationService;
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userName = req.getUserPrincipal().getName();
-        long userId = userService.findUserByUsername(userName).get().getId();
-        List<Organization> allOrganizationsByUser = organizationService.getAllOrganizationsByUser(userId);
-        if("edit".equals(req.getParameter("action"))){
-            String eventId = req.getParameter("id");
-            Optional<Event> optionalEvent = eventService.getEventById(Long.parseLong(eventId));
-            optionalEvent.ifPresent(event -> req.setAttribute("event", event));
-        }
-        req.setAttribute("organizations",allOrganizationsByUser);
-        req.setAttribute("categories",categoryService
-                                            .getAllCategories()
-                                            .getResult());
-        req.getRequestDispatcher("/WEB-INF/event.jsp").forward(req,resp);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Response<Event> eventResponse = new Response<>();
         switch(req.getParameter("action")){
             case "post" -> {
-                eventResponse = eventService.createEvent(eventBuilder(req));
+                Event event = eventBuilder(req);
+                List<TicketPack> ticketPacks = new ArrayList<>();
+                int numberOfTicketsAvailable = 0;
+                for(TicketType type :TicketType.values()){
+                    String stringType = type.toString();
+                    String ticketType = req.getParameter(stringType.toLowerCase() + "-ticket-price" );
+                    String ticketAvailablePlaces = req.getParameter(stringType.toLowerCase() + "-available-places" );
+                    if( ticketType != null || ticketAvailablePlaces != null){
+                        float ticketPrice = Float.parseFloat(
+                                req.getParameter(stringType.toLowerCase() + "-ticket-price")
+                        );
+                        numberOfTicketsAvailable += Integer.parseInt(ticketAvailablePlaces);
+                        ticketPacks.add(
+                                TicketPack.builder()
+                                    .ticketType(type)
+                                    .price(ticketPrice)
+                                    .build()
+                        );
+                    }
+                }
+                event.setNumberOfTicketsAvailable(numberOfTicketsAvailable);
+                event.setTicketPacks(ticketPacks);
+
+                eventResponse = eventService.createEvent(event);
                 req.setAttribute("response",eventResponse);
-                this.doGet(req,resp);
+                resp.sendRedirect(req.getContextPath()+ "/dashboard");
+                //this.doGet(req,resp);
             }
             case "edit" -> {
                 this.doGet(req,resp);
@@ -75,12 +80,14 @@ public class EventServlet extends HttpServlet {
                 event.setId(id);
                 eventResponse = eventService.updateEvent(event);
                 req.setAttribute("response",eventResponse);
+                resp.sendRedirect(req.getContextPath()+ "/dashboard");
                 this.doGet(req,resp);
             }
             case "delete" -> {
                 long id = Long.parseLong(req.getParameter("id"));
                 eventResponse = eventService.deleteEvent(id);
                 req.setAttribute("response",eventResponse);
+                resp.sendRedirect(req.getContextPath()+ "/dashboard");
                 this.doGet(req,resp);
             }
         }
@@ -99,7 +106,7 @@ public class EventServlet extends HttpServlet {
         Organization organization = Organization.builder().id(
                 Long.parseLong(req.getParameter("organization"))
         ).build();
-        int maxTickets = Integer.parseInt(req.getParameter("maxTickets"));
+        //int maxTickets = Integer.parseInt(req.getParameter("maxTickets"));
         return Event.builder()
                 .name(name)
                 .description(description)
@@ -108,7 +115,7 @@ public class EventServlet extends HttpServlet {
                 .location(location)
                 .category(category)
                 .organization(organization)
-                .numberOfTicketsAvailable(maxTickets)
+                //.numberOfTicketsAvailable(maxTickets)
                 .build();
     }
 }

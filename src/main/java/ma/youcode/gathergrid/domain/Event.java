@@ -42,6 +42,9 @@ public class Event {
     @OneToMany
     private List<Ticket> tickets=new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<TicketPack> ticketPacks=new ArrayList<>();
+
     @Column(name = "available_tickets")
     private int numberOfTicketsAvailable;
 
