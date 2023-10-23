@@ -68,7 +68,7 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-title">Available Places</h6>
-                            <p class="card-text">20</p>
+                            <p class="card-text">${event.numberOfTicketsAvailable}</p>
                             <a href="${pageContext.request.contextPath}/new-reservation?id=${event.id}" class="btn reserve-btn ${date.after(event.date) ? 'disabled' : ''}">Reserve a Spot</a>
                         </div>
                     </div>

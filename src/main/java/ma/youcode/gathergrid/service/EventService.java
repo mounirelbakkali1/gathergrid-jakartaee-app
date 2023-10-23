@@ -4,6 +4,7 @@ import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.domain.Event;
+import ma.youcode.gathergrid.domain.TicketType;
 import ma.youcode.gathergrid.repositories.EventRepository;
 import ma.youcode.gathergrid.utils.Response;
 import org.hibernate.annotations.Cache;
@@ -90,5 +91,16 @@ public class EventService {
             eventResponse.setResult(event);
         }else eventResponse.setError(List.of(new Error("Invalid Event")));
         return eventResponse;
+    }
+
+    public void updateQuantityOfTicket(Event event, TicketType ticketType, boolean isIncrement) {
+        int increment = isIncrement ? 1 : -1;
+        event.setNumberOfTicketsAvailable(event.getNumberOfTicketsAvailable() + increment);
+        event.getTicketPacks()
+                .stream()
+                .filter(ticketPack -> ticketPack.getTicketType().equals(ticketType))
+                .findAny()
+                .ifPresent(ticketPack -> ticketPack.setQuantity(ticketPack.getQuantity() + increment));
+        eventRepository.update(event);
     }
 }

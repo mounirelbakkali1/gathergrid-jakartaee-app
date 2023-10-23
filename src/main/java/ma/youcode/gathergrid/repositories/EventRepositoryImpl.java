@@ -34,6 +34,7 @@ public class EventRepositoryImpl implements EventRepository{
     @Override
     public void update(Event event) {
         em.merge(event);
+        em.flush();
     }
 
     @Override
