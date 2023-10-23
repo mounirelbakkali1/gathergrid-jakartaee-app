@@ -1,4 +1,9 @@
 <style>
+    .events-body{
+        margin-left:13vw;
+        margin-right:13vw;
+
+    }
     .blog-card {
         max-width: 80%;
         box-sizing: border-box;
