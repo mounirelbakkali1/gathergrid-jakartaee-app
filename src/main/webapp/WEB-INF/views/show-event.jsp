@@ -36,10 +36,13 @@
     }
     .card{
         width: 9rem;
+        background: rgba(255, 255, 255, 0) !important;
+
     }
     .card h6, .card a{
         font-size: 12px;
     }
+
 </style>
 
 <jsp:include page="../../components/navbar.jsp"/>
