@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequestScoped
-@Transactional()
+@Transactional
 public class EventRepositoryImpl implements EventRepository{
 
     private EntityManager em;
@@ -34,6 +34,7 @@ public class EventRepositoryImpl implements EventRepository{
     @Override
     public void update(Event event) {
         em.merge(event);
+        em.flush();
     }
 
     @Override

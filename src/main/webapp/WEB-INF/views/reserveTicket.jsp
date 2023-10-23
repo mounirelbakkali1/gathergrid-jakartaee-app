@@ -44,10 +44,6 @@
                 <label for="Location" class="form-label">Event Location</label>
                 <input disabled class="form-control" id="Location" name="Location" readonly value="${event.location}"/>
             </div>
-            <div class="col mb-3">
-                <label for="Price" class="form-label">Ticket Price</label>
-                <input disabled class="form-control" id="Price" name="Price" readonly value="25$"/>
-            </div>
         </div>
         <div class="mb-3">
             <label for="eventDescription" class="form-label">Event Description</label>
@@ -58,14 +54,10 @@
         <div class="mb-3">
             <label for="ticketType" class="form-label">Select Ticket Type</label>
             <select class="form-select" id="ticketType" name="ticketType">
-                <c:forEach items="${ticketTypes}" var="ticket">
-                    <option value="${ticket}">${ticket}</option>
+                <c:forEach items="${event.ticketPacks}" var="pack">
+                    <option value="${pack.ticketType}">${pack.ticketType}________${pack.price}$</option>
                 </c:forEach>
             </select>
-        </div>
-        <div class="mb-3">
-            <label for="quantity" class="form-label">Quantity</label>
-            <input type="number" class="form-control" id="quantity" name="quantity" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Reserve Ticket</button>

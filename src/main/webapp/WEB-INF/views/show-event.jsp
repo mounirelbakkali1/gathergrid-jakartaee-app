@@ -10,6 +10,14 @@
 </head>
 <body>
 <style>
+    .disabled{
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: pointer;
+    }
+    .passed{
+        text-decoration-line: line-through;
+    }
     .home-text{
         margin: 10vh 3vw;
     }
@@ -44,8 +52,10 @@
         <img style="width: 100%; height: 90%" src='<c:url value="./files/event.png"></c:url>'  alt=""/>
     </div>
     <div class="container col-md-7 col-12 d-flex ">
+        <c:set var="date" value="<%= new java.util.Date() %>" scope="request" />
+        <jsp:useBean id="date" scope="request" type="java.util.Date"/>
         <div class="home-text  ">
-            <h3 class="mb-2">${event.name}</h3>
+            <h3 class="mb-2 ${date.after(event.date) ? 'passed' : ''}">${event.name}</h3>
             <h6 class="fw-bold">${event.date.toLocaleString()}</h6>
             <div class="d-flex justify-content-between">
                 <div class="my-3">
@@ -58,8 +68,8 @@
                     <div class="card">
                         <div class="card-body">
                             <h6 class="card-title">Available Places</h6>
-                            <p class="card-text">20</p>
-                            <a href="${pageContext.request.contextPath}/new-reservation?id=${event.id}" class="btn reserve-btn">Reserve a Spot</a>
+                            <p class="card-text">${event.numberOfTicketsAvailable}</p>
+                            <a href="${pageContext.request.contextPath}/new-reservation?id=${event.id}" class="btn reserve-btn ${date.after(event.date) ? 'disabled' : ''}">Reserve a Spot</a>
                         </div>
                     </div>
                 </div>

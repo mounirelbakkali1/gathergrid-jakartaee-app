@@ -71,7 +71,9 @@ public class Event {
         this.tickets.add(ticket);
         ticket.setEvent(this);
     }
-    public int getNumberOfTicketsAvailable(){
-        return 10;
+    public int getTotalOfTicketsAvailable(){
+        return ticketPacks
+                .stream()
+                .reduce(0,(acc, ticketPack) -> acc + ticketPack.getQuantity(), Integer::sum);
     }
 }

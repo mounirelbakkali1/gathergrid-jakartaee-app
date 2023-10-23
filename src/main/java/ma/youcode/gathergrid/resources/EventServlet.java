@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.domain.*;
 import ma.youcode.gathergrid.service.CategoryService;
 import ma.youcode.gathergrid.service.EventService;
@@ -28,6 +29,7 @@ import java.util.Optional;
 
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN","USER"}))
 @WebServlet(name = "EventServlet",value = "/event")
+@Transactional
 public class EventServlet extends HttpServlet {
     @Inject
     private UserService userService;
@@ -54,11 +56,13 @@ public class EventServlet extends HttpServlet {
                         float ticketPrice = Float.parseFloat(
                                 req.getParameter(stringType.toLowerCase() + "-ticket-price")
                         );
-                        numberOfTicketsAvailable += Integer.parseInt(ticketAvailablePlaces);
+                        int number = Integer.parseInt(ticketAvailablePlaces);
+                        numberOfTicketsAvailable += number;
                         ticketPacks.add(
                                 TicketPack.builder()
                                     .ticketType(type)
                                     .price(ticketPrice)
+                                        .quantity(number)
                                     .build()
                         );
                     }

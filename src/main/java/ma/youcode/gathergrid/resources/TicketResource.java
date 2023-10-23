@@ -53,20 +53,19 @@ public class TicketResource extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String path = req.getQueryString();
-        Long eventId = Long.parseLong(path.split("=")[1]);
-        Optional<Event> eventById = eventService.getEventById(eventId);
-        if(eventById.isEmpty()){
-            resp.sendError(404,"Event not found");
-        }else{
-            currentEvent = eventById.get();
-            req.setAttribute("event",currentEvent);
-            // ticket type array from enum
-            req.setAttribute("ticketTypes", List.of(TicketType.values()));
-            req.getRequestDispatcher("/WEB-INF/views/reserveTicket.jsp").forward(req,resp);
-        }
-
-
+       if (currentEvent == null){
+           String path = req.getQueryString();
+           Long eventId = Long.parseLong(path.split("=")[1]);
+           Optional<Event> eventById = eventService.getEventById(eventId);
+           if(eventById.isEmpty()){
+               resp.sendError(404,"Event not found");
+           }else{
+               currentEvent = eventById.get();
+           }
+       }
+        req.setAttribute("event",currentEvent);
+        req.setAttribute("ticketTypes", List.of(TicketType.values()));
+        req.getRequestDispatcher("/WEB-INF/views/reserveTicket.jsp").forward(req,resp);
     }
 
     @Override
@@ -77,7 +76,6 @@ public class TicketResource extends HttpServlet {
         Ticket ticket = Ticket.builder()
                 .user(user)
                 .event(currentEvent)
-                .quantity(Integer.parseInt(quantity))
                 .ticketType(TicketType.valueOf(ticketType))
                 .reservationDate(new Date(System.currentTimeMillis()))
                 .build();
@@ -85,7 +83,8 @@ public class TicketResource extends HttpServlet {
         List<Error> errorList = response.getError();
         if(errorList!=null && !errorList.isEmpty()){
             req.setAttribute("errors", errorList);
-            req.getRequestDispatcher("/WEB-INF/views/reserveTicket.jsp").forward(req,resp);
+            doGet(req,resp);
+            return;
         }
         resp.sendRedirect(req.getContextPath()+"/profile");
 
