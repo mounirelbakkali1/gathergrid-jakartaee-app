@@ -19,7 +19,7 @@ public class Ticket {
     private Long id;
 
     private float price;
-
+    @Column(name = "quantity",columnDefinition = "int default 1")
     private int quantity;
 
     @Column(name = "ticket_type")

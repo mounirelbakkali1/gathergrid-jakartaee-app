@@ -20,7 +20,11 @@ public class TicketPack {
     @Column(name = "ticket_type")
     @Enumerated(EnumType.STRING)
     private TicketType ticketType;
+    private int quantity;
 
     private float price;
 
+    public void reduceQuanity() {
+        this.quantity--;
+    }
 }

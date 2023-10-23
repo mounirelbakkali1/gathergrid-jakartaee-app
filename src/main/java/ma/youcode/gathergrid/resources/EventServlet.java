@@ -90,11 +90,13 @@ public class EventServlet extends HttpServlet {
                 float ticketPrice = Float.parseFloat(
                         req.getParameter(stringType.toLowerCase() + "-ticket-price")
                 );
-                numberOfTicketsAvailable += Integer.parseInt(ticketAvailablePlaces);
+                int number = Integer.parseInt(ticketAvailablePlaces);
+                numberOfTicketsAvailable += number;
                 ticketPacks.add(
                         TicketPack.builder()
                                 .ticketType(type)
                                 .price(ticketPrice)
+                                .quantity(number)
                                 .build()
                 );
             }
