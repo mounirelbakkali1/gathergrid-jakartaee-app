@@ -12,7 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.domain.*;
 import ma.youcode.gathergrid.service.CategoryService;
 import ma.youcode.gathergrid.service.EventService;
@@ -29,7 +28,6 @@ import java.util.Optional;
 
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN","USER"}))
 @WebServlet(name = "EventServlet",value = "/event")
-@Transactional
 public class EventServlet extends HttpServlet {
     @Inject
     private UserService userService;
@@ -45,35 +43,9 @@ public class EventServlet extends HttpServlet {
         Response<Event> eventResponse = new Response<>();
         switch(req.getParameter("action")){
             case "post" -> {
-                Event event = eventBuilder(req);
-                List<TicketPack> ticketPacks = new ArrayList<>();
-                int numberOfTicketsAvailable = 0;
-                for(TicketType type :TicketType.values()){
-                    String stringType = type.toString();
-                    String ticketType = req.getParameter(stringType.toLowerCase() + "-ticket-price" );
-                    String ticketAvailablePlaces = req.getParameter(stringType.toLowerCase() + "-available-places" );
-                    if( ticketType != null || ticketAvailablePlaces != null){
-                        float ticketPrice = Float.parseFloat(
-                                req.getParameter(stringType.toLowerCase() + "-ticket-price")
-                        );
-                        int number = Integer.parseInt(ticketAvailablePlaces);
-                        numberOfTicketsAvailable += number;
-                        ticketPacks.add(
-                                TicketPack.builder()
-                                    .ticketType(type)
-                                    .price(ticketPrice)
-                                        .quantity(number)
-                                    .build()
-                        );
-                    }
-                }
-                event.setNumberOfTicketsAvailable(numberOfTicketsAvailable);
-                event.setTicketPacks(ticketPacks);
-
-                eventResponse = eventService.createEvent(event);
+                eventResponse = eventService.createEvent(eventBuilder(req));
                 req.setAttribute("response",eventResponse);
                 resp.sendRedirect(req.getContextPath()+ "/dashboard");
-                //this.doGet(req,resp);
             }
             case "edit" -> {
                 this.doGet(req,resp);
@@ -85,14 +57,12 @@ public class EventServlet extends HttpServlet {
                 eventResponse = eventService.updateEvent(event);
                 req.setAttribute("response",eventResponse);
                 resp.sendRedirect(req.getContextPath()+ "/dashboard");
-                this.doGet(req,resp);
             }
             case "delete" -> {
                 long id = Long.parseLong(req.getParameter("id"));
                 eventResponse = eventService.deleteEvent(id);
                 req.setAttribute("response",eventResponse);
                 resp.sendRedirect(req.getContextPath()+ "/dashboard");
-                this.doGet(req,resp);
             }
         }
     }
@@ -110,7 +80,27 @@ public class EventServlet extends HttpServlet {
         Organization organization = Organization.builder().id(
                 Long.parseLong(req.getParameter("organization"))
         ).build();
-        //int maxTickets = Integer.parseInt(req.getParameter("maxTickets"));
+        List<TicketPack> ticketPacks = new ArrayList<>();
+        int numberOfTicketsAvailable = 0;
+        for(TicketType type :TicketType.values()){
+            String stringType = type.toString();
+            String ticketType = req.getParameter(stringType.toLowerCase() + "-ticket-price" );
+            String ticketAvailablePlaces = req.getParameter(stringType.toLowerCase() + "-available-places" );
+            if( ticketType != null || ticketAvailablePlaces != null){
+                float ticketPrice = Float.parseFloat(
+                        req.getParameter(stringType.toLowerCase() + "-ticket-price")
+                );
+                int number = Integer.parseInt(ticketAvailablePlaces);
+                numberOfTicketsAvailable += number;
+                ticketPacks.add(
+                        TicketPack.builder()
+                                .ticketType(type)
+                                .price(ticketPrice)
+                                .quantity(number)
+                                .build()
+                );
+            }
+        }
         return Event.builder()
                 .name(name)
                 .description(description)
@@ -119,7 +109,8 @@ public class EventServlet extends HttpServlet {
                 .location(location)
                 .category(category)
                 .organization(organization)
-                //.numberOfTicketsAvailable(maxTickets)
+                .numberOfTicketsAvailable(numberOfTicketsAvailable)
+                .ticketPacks(ticketPacks)
                 .build();
     }
 }

@@ -39,7 +39,7 @@
                                         </div>
                                         <div class="col-4">
                                             <h6 class="text-muted mt-1 mb-2 fw-normal">Tickets</h6>
-                                            <h6 class="mb-0 fw-bold">${fn:length(events)}</h6>
+                                            <h6 class="mb-0 fw-bold">${fn:length(tickets)}</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -209,8 +209,8 @@
             </c:choose>
             </tbody>
         </table>
+    </div>
 </div>
-
 </body>
 <jsp:include page="../../components/js-scripts.jsp"></jsp:include>
 <script>
