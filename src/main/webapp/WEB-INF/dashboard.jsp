@@ -1,7 +1,6 @@
 <%@ page import="ma.youcode.gathergrid.domain.Event" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<<<<<<< HEAD
 
 
 
@@ -20,7 +19,6 @@
     <title>Dashboard</title>
 
     <jsp:include page="../components/head.jsp"/>
-    <jsp:include page="../components/table.jsp"/>
     <jsp:include page="../components/my-events.jsp"/>
     <style>
         body {
@@ -32,7 +30,6 @@
     </style>
 </head>
 <body>
-<<<<<<< HEAD
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Clicker+Script&family=Poppins&family=Roboto:ital,wght@0,100;0,300;0,500;0,900;1,300&display=swap');
@@ -309,7 +306,7 @@
     <div class="side-inner">
 
         <div class="profile">
-            <img src="images/person_profile.jpg" alt="Image" class="img-fluid">
+            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image" class="img-fluid">
             <h3 class="name">Debby Williams</h3>
             <span class="country">New York, USA</span>
         </div>
@@ -338,7 +335,7 @@
                 <li><a href="#"><span class="icon-notifications mr-3"></span>Notifications</a></li>
                 <li><a href="#"><span class="icon-location-arrow mr-3"></span>Direct</a></li>
                 <li><a href="#"><span class="icon-pie-chart mr-3"></span>Stats</a></li>
-                <li><a href="#"><span class="icon-sign-out mr-3"></span>Sign out</a></li>
+                <li><a href="/logout"><span class="icon-sign-out mr-3"></span>Sign out</a></li>
             </ul>
         </div>
     </div>
@@ -349,18 +346,17 @@
 
     <jsp:include page="../components/navbar.jsp"/>
 
+    <h3 class="text-center" style="background: white; padding: 22px;margin: 21px 0;color: #0e1c36;">Dashboard</h3>
     <div class="container">
-=======
->>>>>>> c59aa58b8d4438862a1c9953ebdcfdc472fad53f
-    <h1>you are in dashboard</h1>
+
     <h4>List of your organization</h4>
         <div class="organization">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Action</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -406,25 +402,7 @@
                         </tr>
                         </thead>
                         <tbody>
-<<<<<<< HEAD
-                        <c:forEach items="${events}" var="event">
-                            <tr>
-                                <td >${event.name}</td>
-                                <td >${event.description}</td>
-                                <td >${event.category.name}</td>
-                                <td >${event.location}</td>
-                                <td >${event.organization.name}</td>
-                                <td >${event.date}</td>
-                                <td >${event.hour}</td>
-                                <td>
-                                    <a href="#editEmployeeModal"
-                                       onclick="prepareForModal(${event.id},'${event.name}','${event.description}','${event.category.id}','${event.location}','${event.organization.id}','${event.date}','${event.hour}')"
-                                       class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                                    <a href="#deleteEmployeeModal" onclick="perpareToDelete(${event.id})" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                        </c:forEach>
-=======
+
                             <c:forEach items="${events}" var="event">
                                 <tr>
                                     <td >${event.name}</td>
@@ -442,7 +420,6 @@
                                     </td>
                                 </tr>
                             </c:forEach>
->>>>>>> c59aa58b8d4438862a1c9953ebdcfdc472fad53f
                         </tbody>
                     </table>
                     <div class="clearfix">
