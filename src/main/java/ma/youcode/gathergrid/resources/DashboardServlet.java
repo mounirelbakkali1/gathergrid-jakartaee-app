@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ma.youcode.gathergrid.domain.Organization;
+import ma.youcode.gathergrid.domain.TicketType;
 import ma.youcode.gathergrid.service.CategoryService;
 import ma.youcode.gathergrid.service.EventService;
 import ma.youcode.gathergrid.service.OrganizationService;
@@ -46,7 +47,7 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("events",eventService.getAllEvents().getResult());
-
+        req.setAttribute("ticketTypes",TicketType.values());
         req.setAttribute("categories",categoryService
                 .getAllCategories()
                 .getResult());

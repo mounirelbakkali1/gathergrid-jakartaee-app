@@ -1,11 +1,14 @@
 <%@ page import="ma.youcode.gathergrid.domain.Event" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<<<<<<< HEAD
 
 
 
 <!doctype html>
 <html lang="en">
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -19,8 +22,17 @@
     <jsp:include page="../components/head.jsp"/>
     <jsp:include page="../components/table.jsp"/>
     <jsp:include page="../components/my-events.jsp"/>
+    <style>
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+        }
+    </style>
 </head>
 <body>
+<<<<<<< HEAD
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Clicker+Script&family=Poppins&family=Roboto:ital,wght@0,100;0,300;0,500;0,900;1,300&display=swap');
@@ -338,6 +350,8 @@
     <jsp:include page="../components/navbar.jsp"/>
 
     <div class="container">
+=======
+>>>>>>> c59aa58b8d4438862a1c9953ebdcfdc472fad53f
     <h1>you are in dashboard</h1>
     <h4>List of your organization</h4>
         <div class="organization">
@@ -392,6 +406,7 @@
                         </tr>
                         </thead>
                         <tbody>
+<<<<<<< HEAD
                         <c:forEach items="${events}" var="event">
                             <tr>
                                 <td >${event.name}</td>
@@ -409,6 +424,25 @@
                                 </td>
                             </tr>
                         </c:forEach>
+=======
+                            <c:forEach items="${events}" var="event">
+                                <tr>
+                                    <td >${event.name}</td>
+                                    <td >${event.description}</td>
+                                    <td >${event.category.name}</td>
+                                    <td >${event.location}</td>
+                                    <td >${event.organization.name}</td>
+                                    <td >${event.date}</td>
+                                    <td >${event.hour}</td>
+                                    <td>
+                                        <a href="#editEmployeeModal"
+                                           onclick="prepareForModal(${event.id},'${event.name}','${event.description}','${event.category.id}','${event.location}','${event.organization.id}','${event.date}','${event.hour}'${event.ticketPacks})"
+                                           class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                                        <a href="#deleteEmployeeModal" onclick="perpareToDelete(${event.id})" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+>>>>>>> c59aa58b8d4438862a1c9953ebdcfdc472fad53f
                         </tbody>
                     </table>
                     <div class="clearfix">
@@ -427,7 +461,7 @@
             </div>
         </div>
     </div>
-    <!-- Edit Modal HTML -->
+    <!-- Add Modal HTML -->
     <div id="addEmployeeModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -475,9 +509,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Available Places:</label>
-                            <input class="form-control available-place" type="number" min="10" value="10" required name="maxTickets">
-                        </div>
+                            <label>Ticket Packs:</label>
+                            <c:forEach items="${ticketTypes}" var="type">
+                                <div class="form-group d-flex justify-content-between align-items-center gap-2 ticket-packs">
+                                    <input id="${type}-checkbox" onclick="ticketCheckBoxClicked(this,'${type}-price','${type}-available-places')" type="checkbox">
+                                    <input id="${type}-available-places" placeholder="${type} Available Place" name="${fn:toLowerCase(type)}-available-places" class="form-control" type="number" min="0" disabled>
+                                    <input id="${type}-price" placeholder="${type} Ticket Price" name="${fn:toLowerCase(type)}-ticket-price" class="form-control" type="number" min="0" disabled>
+                                </div>
+                            </c:forEach>
+                        <div>
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -539,6 +579,15 @@
                             <label>Available Places:</label>
                             <input class="form-control available-place" type="number" min="10" value="10" required name="maxTickets">
                         </div>
+                        <div class="form-group">
+                            <label>Ticket Packs:</label>
+                            <c:forEach items="${ticketTypes}" var="type">
+                            <div class="form-group d-flex justify-content-between align-items-center gap-2 ticket-packs">
+                                <input id="${type}-checkbox" onclick="ticketCheckBoxClicked(this,'${type}-price')" type="checkbox">
+                                <input id="${type}-price" placeholder="${type} Ticket Price" name="${fn:toLowerCase(type)}-ticket-price" class="form-control" type="number" min="0" disabled>
+                            </div>
+                            </c:forEach>
+                            <div>
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -626,7 +675,7 @@
             }
         });
     }
-    function prepareForModal(id,name,description,categoryId,location,organizationId,date,hour){
+    function prepareForModal(id,name,description,categoryId,location,organizationId,date,hour,ticketPacks){
         $('.edit-form .id').val(id)
         $('.edit-form .name').val(name)
         $('.edit-form .description').val(description)
@@ -640,6 +689,21 @@
     }
     function perpareToDelete(eventId){
         $('.delete-form .id').val(eventId)
+    }
+    function ticketCheckBoxClicked(checkbox,priceInputId,availablePlacesInputId){
+        var checkedCheckboxes = $(' .ticket-packs input[type="checkbox"]:checked');
+        if(checkedCheckboxes.length !== 0){
+            if ($(checkbox).is(':checked')) {
+                $('#' + priceInputId).prop('disabled', false);
+                $('#' + availablePlacesInputId).prop('disabled', false);
+            } else {
+                $('#' + priceInputId).prop('disabled', true).val('');
+                $('#' + availablePlacesInputId).prop('disabled', true).val('');
+            }
+        }else{
+            alert("There must be at least one ticket type: ");
+            checkbox.setAttribute('checked')
+        }
     }
 </script>
 
