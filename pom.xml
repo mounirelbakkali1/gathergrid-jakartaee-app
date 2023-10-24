@@ -16,9 +16,21 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.release>17</maven.compiler.release>
         <junit.version>5.9.2</junit.version>
+        <weld.version>4.0.3.Final</weld.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-web-api</artifactId>
+            <version>9.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
         <dependency>
             <groupId>jakarta.security.enterprise</groupId>
             <artifactId>jakarta.security.enterprise-api</artifactId>
@@ -55,7 +67,7 @@
         <dependency>
             <groupId>org.jboss.weld.se</groupId>
             <artifactId>weld-se-core</artifactId>
-            <version>4.0.3.Final</version>
+            <version>${weld.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -107,6 +119,26 @@
                  <version>2.0.0</version>
                  <scope>provided</scope>
              </dependency>-->
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-junit5</artifactId>
+            <version>4.0.0.Final</version>
+            <scope>test</scope>
+        </dependency>
+        <!--mockito dependency-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!--mockito extension-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
