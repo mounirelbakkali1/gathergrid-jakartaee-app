@@ -1,16 +1,13 @@
 package ma.youcode.gathergrid.repositories;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Category;
-import ma.youcode.gathergrid.utils.Response;
 
 import java.util.List;
 
-@RequestScoped
 public class CategoryRepositoryImp implements CategoryRepository{
 
     private EntityManager em;

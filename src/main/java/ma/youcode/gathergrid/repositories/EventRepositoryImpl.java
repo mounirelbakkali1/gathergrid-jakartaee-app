@@ -1,17 +1,14 @@
 package ma.youcode.gathergrid.repositories;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Event;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@RequestScoped
 @Transactional
 public class EventRepositoryImpl implements EventRepository{
 

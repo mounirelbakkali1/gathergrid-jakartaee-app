@@ -1,6 +1,5 @@
 package ma.youcode.gathergrid.service;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.domain.Comment;
@@ -14,7 +13,6 @@ import ma.youcode.gathergrid.utils.Response;
 import java.util.List;
 import java.util.Optional;
 
-@RequestScoped
 @Transactional
 public class CommentService {
 

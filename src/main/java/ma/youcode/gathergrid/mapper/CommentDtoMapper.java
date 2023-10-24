@@ -1,12 +1,13 @@
 package ma.youcode.gathergrid.mapper;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Singleton;
 import ma.youcode.gathergrid.domain.Comment;
 import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.domain.User;
 import ma.youcode.gathergrid.dto.CommentDto;
 
-@ApplicationScoped
+@Singleton
 public class CommentDtoMapper {
 
     public CommentDto toDto(Comment comment){

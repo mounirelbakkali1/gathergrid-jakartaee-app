@@ -25,4 +25,23 @@
             <property name="hibernate.format_sql" value="true"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="test-persistence" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:/MyTestSqlDS</jta-data-source>
+        <class>ma.youcode.gathergrid.domain.User</class>
+        <class>ma.youcode.gathergrid.domain.Role</class>
+        <class>ma.youcode.gathergrid.domain.Event</class>
+        <class>ma.youcode.gathergrid.domain.Category</class>
+        <class>ma.youcode.gathergrid.domain.Organization</class>
+        <class>ma.youcode.gathergrid.domain.Ticket</class>
+        <class>ma.youcode.gathergrid.domain.Comment</class>
+        <class>ma.youcode.gathergrid.domain.TicketPack</class>
+        <properties>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
 </persistence>

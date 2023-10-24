@@ -1,29 +1,31 @@
 package ma.youcode.gathergrid.service;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.domain.TicketType;
+import ma.youcode.gathergrid.dto.EventDto;
+import ma.youcode.gathergrid.mapper.EventDtoMapper;
 import ma.youcode.gathergrid.repositories.EventRepository;
 import ma.youcode.gathergrid.utils.Response;
-import org.hibernate.annotations.Cache;
 
-import javax.swing.text.html.Option;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-@RequestScoped
 @Transactional
 public class EventService {
     private EventRepository eventRepository;
 
     private List<Error> errors = new ArrayList<>();
+    private EventDtoMapper eventDtoMapper;
 
     @Inject
-    public EventService(EventRepository eventRepository) {
+    public EventService(EventRepository eventRepository, EventDtoMapper eventDtoMapper) {
         this.eventRepository = eventRepository;
+        this.eventDtoMapper = eventDtoMapper;
     }
     public EventService() {
     }
@@ -102,5 +104,18 @@ public class EventService {
                 .findAny()
                 .ifPresent(ticketPack -> ticketPack.setQuantity(ticketPack.getQuantity() + increment));
         eventRepository.update(event);
+    }
+
+
+    public List<EventDto> updateEvents(List<Event> events){
+        return events.stream()
+                .filter(event -> event.getTickets().size() < 20 && event.getDateTime().isBefore(LocalDateTime.now()))
+                .map(event->{
+                    int numberOFTicketsReserved = event.getTickets().size();
+                    event.setDateTime(LocalDateTime.now().plusDays(numberOFTicketsReserved));
+                    return event;
+                })
+                .map(eventDtoMapper::toDto)
+                .collect(Collectors.toList());
     }
 }

@@ -1,9 +1,9 @@
 package ma.youcode.gathergrid.utils;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Singleton;
 import jakarta.security.enterprise.identitystore.PasswordHash;
 import org.apache.commons.codec.digest.DigestUtils;
-@ApplicationScoped
+@Singleton
 public class PasswordHashUtil implements PasswordHash {
 
     @Override
