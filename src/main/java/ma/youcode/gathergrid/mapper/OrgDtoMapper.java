@@ -1,10 +1,10 @@
 package ma.youcode.gathergrid.mapper;
 
-import jakarta.enterprise.inject.Model;
+import jakarta.inject.Singleton;
 import ma.youcode.gathergrid.domain.Organization;
 import ma.youcode.gathergrid.dto.OrganizationDto;
 
-@Model
+@Singleton
 public class OrgDtoMapper {
 
     public OrganizationDto toDto(Organization organization){

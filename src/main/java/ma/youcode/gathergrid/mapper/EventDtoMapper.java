@@ -1,10 +1,10 @@
 package ma.youcode.gathergrid.mapper;
 
-import jakarta.enterprise.inject.Model;
+import jakarta.inject.Singleton;
 import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.dto.EventDto;
 
-@Model
+@Singleton
 public class EventDtoMapper {
     public EventDto toDto(Event event) {
         EventDto eventDto = new EventDto();

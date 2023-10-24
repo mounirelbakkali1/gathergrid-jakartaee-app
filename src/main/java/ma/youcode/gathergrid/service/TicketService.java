@@ -1,11 +1,9 @@
 package ma.youcode.gathergrid.service;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import lombok.NoArgsConstructor;
 import ma.youcode.gathergrid.config.MyQualifier;
-import ma.youcode.gathergrid.domain.Event;
 import ma.youcode.gathergrid.domain.Ticket;
 import ma.youcode.gathergrid.domain.TicketPack;
 import ma.youcode.gathergrid.dto.TicketDto;
@@ -14,12 +12,10 @@ import ma.youcode.gathergrid.repositories.TicketRepository;
 import ma.youcode.gathergrid.utils.Response;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-@RequestScoped
 @NoArgsConstructor
 @Transactional
 public class TicketService  {

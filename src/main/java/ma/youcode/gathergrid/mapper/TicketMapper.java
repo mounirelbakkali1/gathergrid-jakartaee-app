@@ -1,6 +1,6 @@
 package ma.youcode.gathergrid.mapper;
 
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Singleton;
 import ma.youcode.gathergrid.domain.Ticket;
 import ma.youcode.gathergrid.domain.TicketType;
 import ma.youcode.gathergrid.dto.TicketDto;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-@ApplicationScoped
+@Singleton
 public class TicketMapper {
 
     public TicketDto toDto(Ticket ticket) {

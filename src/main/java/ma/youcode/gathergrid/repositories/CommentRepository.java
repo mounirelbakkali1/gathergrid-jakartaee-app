@@ -1,15 +1,13 @@
 package ma.youcode.gathergrid.repositories;
 
-import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import ma.youcode.gathergrid.config.UserDatabase;
 import ma.youcode.gathergrid.domain.Comment;
-import ma.youcode.gathergrid.domain.Event;
 
 import java.util.List;
 
-@RequestScoped
+
 public class CommentRepository {
 
     private EntityManager em ;

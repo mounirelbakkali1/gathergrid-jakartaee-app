@@ -1,20 +1,15 @@
 package ma.youcode.gathergrid.service;
 
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Alternative;
-import jakarta.enterprise.inject.Model;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import ma.youcode.gathergrid.config.MyQualifier;
-import ma.youcode.gathergrid.domain.Organization;
 import ma.youcode.gathergrid.domain.User;
 import ma.youcode.gathergrid.repositories.UserRepository;
-import ma.youcode.gathergrid.repositories.UserRepositoryImpl;
 
 import javax.validation.Valid;
 import java.util.Optional;
 
-@ApplicationScoped
+
 public class UserService {
 
     private  UserRepository userRepository;
