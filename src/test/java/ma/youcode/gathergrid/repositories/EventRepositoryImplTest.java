@@ -25,10 +25,11 @@ public class EventRepositoryImplTest {
                 .addClass(EventRepositoryImpl.class)
                 .addClass(EventRepository.class)
                 .addClass(Event.class)
+                //.addAsManifestResource("META-INF/beans.xml","beans.xml");
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
    @Test
     public void should_return_null_when_event_not_found() {
-    }
+   }
 }
