@@ -19,7 +19,20 @@
         <weld.version>4.0.3.Final</weld.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.arquillian</groupId>
+                <artifactId>arquillian-universe</artifactId>
+                <version>1.5.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+
         <dependency>
             <groupId>jakarta.platform</groupId>
             <artifactId>jakarta.jakartaee-web-api</artifactId>
@@ -125,6 +138,27 @@
             <version>4.0.0.Final</version>
             <scope>test</scope>
         </dependency>
+         <!--arquillian required dependencies -->
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-junit</artifactId>
+            <scope>test</scope>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap</groupId>
+            <artifactId>shrinkwrap-api</artifactId>
+            <version>2.0.0-beta-1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.wildfly.arquillian</groupId>
+            <artifactId>wildfly-arquillian-container-remote</artifactId>
+            <version>5.0.0.Alpha1</version>
+            <scope>test</scope>
+        </dependency>
+
+
         <!--mockito dependency-->
         <dependency>
             <groupId>org.mockito</groupId>
@@ -138,7 +172,6 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <version>5.3.1</version>
         </dependency>
-
     </dependencies>
 
     <build>
