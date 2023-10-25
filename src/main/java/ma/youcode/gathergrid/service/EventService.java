@@ -50,11 +50,20 @@ public class EventService {
 
 
     public void validate(Event event){
-        if( event.getName().isEmpty() || event.getLocation().isEmpty() || event.getDescription().isEmpty()){
+        if( event.getName()==null || event.getName().isEmpty() ||
+                event.getLocation() ==null || event.getLocation().isEmpty() ||
+                event.getDescription()==null || event.getDescription().isEmpty()){
             this.errors.add(new Error("All Fields are required"));
-        }else if(event.getCategory() == null || event.getOrganization() == null){
+        }
+        if(event.getCategory() == null ||
+                event.getCategory().getName()==null ||
+                event.getCategory().getName().isEmpty() ||
+                event.getOrganization() == null ||
+                event.getOrganization().getName()==null ||
+                event.getOrganization().getName().isEmpty()){
             this.errors.add(new Error("Invalid Category or organization"));
-        }else if( event.getNumberOfTicketsAvailable() < 10) this.errors.add(new Error("Invalid Number of places"));
+        }
+        if( event.getNumberOfTicketsAvailable() < 10) this.errors.add(new Error("Invalid Number of places"));
     }
 
     public Response<List<Event>> getAllEvents(){
@@ -67,7 +76,7 @@ public class EventService {
         return eventRepository.findEventByName(eventName);
     }
 
-    public Optional<Event> getEventById(Long eventId) {
+    public Optional<Event> getEventById(long eventId) {
         return Optional.ofNullable(eventRepository.findById(eventId));
     }
 
@@ -87,8 +96,8 @@ public class EventService {
     }
     public Response<Event> deleteEvent(long id){
         Response<Event> eventResponse = new Response<>();
-        if(eventIsExist(id)){
-            Event event = eventRepository.findById(id);
+        Event event = eventRepository.findById(id);
+        if(event != null){
             eventRepository.delete(event);
             eventResponse.setResult(event);
         }else eventResponse.setError(List.of(new Error("Invalid Event")));
